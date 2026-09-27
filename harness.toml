@@ -45,7 +45,7 @@ dial = "frugal"
 # The target repository (design D4). A path or URL; the harness keeps its own
 # clone under <project>/repo/ and NEVER pushes. `owned = true` is what allows
 # `--open-pr`; leave it false for an open-source or work repo you do not own.
-source = "https://github.com/luck058/voice-coach"
+source = "https://github.com/luck058/voice-analysis"
 owned = true
 base_branch = "main"
 

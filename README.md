@@ -1,4 +1,4 @@
-# voice-coach: harness project data
+# voice-coach (luck058/voice-analysis): harness project data
 
 This branch (`harness-project`) is the agent-harness **project directory** for the
 voice-coach app. The app's code is on `main` of this same repository. This branch
@@ -18,7 +18,7 @@ are git-ignored.
 ## Restore it on a new machine or in a new cloud session
 
 ```bash
-git clone -b harness-project https://github.com/luck058/voice-coach ../projects/voice-coach
+git clone -b harness-project https://github.com/luck058/voice-analysis ../projects/voice-coach
 harness repo clone --project ../projects/voice-coach     # the app code, from [repo] source
 harness doctor --project ../projects/voice-coach
 ```
