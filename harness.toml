@@ -1,0 +1,132 @@
+# harness.toml — per-project configuration. Committed with the project.
+# Schema and validation: harness/project_config.py. Design: AI_Files/harness_v2_design.md.
+#
+# Model names and API keys are NOT here — they live in the .env files (secrets in
+# the harness .env once, non-secret model overrides in this project's .env).
+schema = 1
+
+[caps]
+# Spend limits, in `currency`. Providers report cost in US dollars; the harness
+# converts with the FIXED rate below at check time. The default rate is a weak
+# pound on purpose — fewer dollars per pound means a cap trips earlier — and
+# there is no live lookup, because a cap that needs a network call can silently
+# stop applying. Defaults err low: a passing item costs pence with the default
+# implementation model, so these only trip on a loop or a misconfiguration.
+currency = "GBP"
+usd_per_gbp = 1.20
+per_item = 0.30
+per_run = 3.00
+per_day = 10.00
+# How many times a failed item may be retried with a diagnosis before it is
+# reported as unrepairable (design D10).
+repair_attempts = 2
+
+[review]
+# When a human sees the plan before anything is spent:
+#   auto     proceed whenever the plan check passes (still asks above the run cap,
+#            or when the repo is not yours)
+#   on-fail  stop only when the plan check fails            (default)
+#   always   always stop for a human
+policy = "on-fail"
+
+[routing]
+# How much work goes to Claude (design D16). Manual: neither the harness nor
+# Claude Code can read your remaining subscription quota.
+#   frugal    every downstream role on OpenRouter; the operator delegates more
+#   balanced  implementer on OpenRouter, checkers on Claude Code
+#   claude    implementer and single-shot roles on Claude Code
+dial = "frugal"
+# Per-role overrides beat the dial. Roles: scaffolder, test_writer, implementer,
+# reviewer, plan_checker, result_checker. Backends: litellm, openhands,
+# claude-code, codex.
+# implementer = "openhands"
+
+[repo]
+# The target repository (design D4). A path or URL; the harness keeps its own
+# clone under <project>/repo/ and NEVER pushes. `owned = true` is what allows
+# `--open-pr`; leave it false for an open-source or work repo you do not own.
+source = "https://github.com/luck058/voice-coach"
+owned = true
+base_branch = "main"
+
+[test]
+# How to install and test THIS repository. Anything left out falls back to the
+# language registry (langspec/). `harness doctor` runs these once in the sandbox
+# before any paid run. Test commands must write JUnit XML under /results.
+# install = "pip install -e ."
+# command = ["python -m pytest -q --junitxml=/results/results-python.xml"]
+# paths = ["tests/**"]
+# image = "nikolaik/python-nodejs:python3.12-nodejs22"
+
+[secrets]
+# NAMES of environment variables the sandbox may receive. Values come from the
+# harness .env and are injected into containers only; they are redacted from
+# every log and trajectory. Never put a value here.
+# allow = ["NPM_TOKEN"]
+
+[gates]
+# Deterministic checks and what each does on failure: block | warn | off.
+# A gate that could not run (no Docker, say) is recorded as "did not run" —
+# never as a pass — whatever the policy (design D20).
+#
+# red_check: before any implementer spend, run the generated tests against the
+# stubs. Every new test must FAIL, and fail because the stub is unimplemented —
+# not because it cannot import, has a syntax error, or calls the wrong signature.
+# A test that passes against a stub proves nothing and is rejected too.
+red_check = "block"
+# How many times the test-writer is re-asked, with the red check's findings,
+# before the item is reported as a scaffolding failure.
+red_check_retries = 1
+# Files changed outside an item's declared `files` (design D22.1). auto = block for
+# refactor/chore items, warn for feature/bugfix. block | warn | off also accepted.
+diff_scope = "auto"
+# The project's own checks, run in the sandbox on the finished work (D22.2). A
+# failing command blocks the item under project_gates = "block".
+project_gates = "block"
+# lint = ["ruff check ."]
+# Type errors in src/ block an item (tests are excluded in tsconfig.json, so a
+# frozen test file can never block the implementer).
+typecheck = ["npx tsc --noEmit -p tsconfig.json"]
+# Advisory diff coverage (D22.3): a command that writes Cobertura XML to
+# /results/coverage.xml, e.g.
+# coverage_command = "python -m pytest -q --cov=src --cov-report=xml:/results/coverage.xml"
+
+[escalation]
+# What happens when an item fails (design D23). strategy:
+#   ladder      repair on the same model when the failure has a diagnosis, move up
+#               the ladder when it is the kind a stronger model fixes
+#   same-model  never change model, only repair
+#   ask         stop after any failure and leave the decision to you
+strategy = "ladder"
+# The implementer's ladder, cheapest first. Unset = LLM_MODEL, then
+# openrouter/z-ai/glm-4.7, then openrouter/qwen/qwen3-coder. "claude-code" is a
+# valid rung (only used when [claude] allows it).
+# implementer = ["openrouter/openai/gpt-oss-120b", "openrouter/z-ai/glm-4.7"]
+# Attempts per item per run, all rungs together. The caps apply on top.
+max_attempts = 3
+# Per failure class: repair | escalate | stop. Unlisted classes keep their
+# defaults (harness/project_config.py DEFAULT_ESCALATION_ACTIONS).
+# [escalation.on]
+# layer2_rerun = "escalate"
+
+[claude]
+# Whether the harness may use your Claude subscription (design D30). Nothing can
+# read your remaining quota, so this is your switch: turn it on in a light week.
+available = false
+# Soft cap on the harness's own Claude use, in the NOTIONAL dollars Claude Code
+# reports per call, over a rolling 7 days. Never mixed with the [caps] above.
+allowance_per_week = 20.0
+# Where Claude may appear: a role makes Claude that role's model; "<role>:top"
+# adds Claude as that role's last ladder rung. The plan and result checkers are
+# never Claude while Claude is the planner: a checker must come from a different
+# model family than the plan it judges (design D5).
+rungs = ["implementer:top"]
+
+[experiments]
+# Paired shadow comparisons of escalation strategies (design D24): after an item
+# passes, it may be re-run once under another rung, in a throwaway workspace that
+# is never merged, to compare cost and pass rate on the SAME item. Capped per
+# rolling 7 days, in [caps] currency; 0 turns shadow runs off. Every shadow run is
+# labelled as such in the ledger, the report and `harness stats`.
+shadow_budget_gbp_per_week = 1.0
+

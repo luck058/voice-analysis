@@ -1,0 +1,10 @@
+# Marks this directory as a harness project. Do not delete: `--project` checks
+# for this file so a mistyped path fails loudly instead of silently scaffolding
+# a new project tree into the wrong directory.
+schema_version = 1
+
+# Reserved for running the harness against an EXISTING codebase rather than
+# growing one from scratch. Not read by anything yet — the harness currently
+# builds a codebase item by item from generated stubs. Left here so the field
+# has a documented home when that work happens.
+# source_repo = "https://github.com/you/your-repo"
