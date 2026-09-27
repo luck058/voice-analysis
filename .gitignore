@@ -1,0 +1,6 @@
+node_modules/
+dist/
+coverage/
+# Written by the harness's test setup inside its sandbox (langspec TypeScript
+# install step); never part of the project.
+jest.config.js
