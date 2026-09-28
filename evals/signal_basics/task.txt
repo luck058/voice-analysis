@@ -55,7 +55,7 @@ The test tooling is installed for you before this session starts, by
 
 Run the tests:
 
-    npx jest --ci
+    npx --no jest --ci
 
 If that reports the test runner is missing, the pre-install failed.
 Re-run it yourself, passing the terminal tool's `timeout` parameter as at
