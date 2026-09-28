@@ -50,6 +50,9 @@ rejects the task if its trajectory shows no real test run.
 
 The test tooling is installed for you before this session starts, by
 `.openhands/setup.sh`. Normally you only need the run command below.
+Do not reinstall the project's dependencies yourself (`npm ci`, `npm install`,
+`pip install -r ...`): the test tooling is not in the project's manifest, so
+a reinstall removes it.
 
 ### Commands
 
@@ -63,4 +66,6 @@ least 900 seconds (otherwise the command is
 paused after 30 seconds with no new output and reports exit code -1 while
 it is still running):
 
-    if [ -f package.json ]; then ( npm ci --no-audit --no-fund || npm install --no-audit --no-fund ) || exit 1; fi; npm install --no-audit --no-fund --no-save jest@29 ts-jest@29 typescript @types/jest jest-junit || exit 1; printf "%s\n" "module.exports = { testEnvironment: \"node\", transform: { \"^.+[.]tsx?$\": [\"ts-jest\", { diagnostics: false }] }, testMatch: [\"**/*.test.ts\", \"**/*.test.tsx\", \"**/*.spec.ts\", \"**/*.spec.tsx\"] };" > jest.config.js
+    if [ -f package.json ]; then ( npm ci --no-audit --no-fund || npm install --no-audit --no-fund ) || exit 1; fi; npm install --no-audit --no-fund --no-save jest@29 ts-jest@29 typescript @types/jest jest-junit || exit 1; printf "%s\n" "module.exports = { testEnvironment: \"node\", transform: { \"^.+[.]tsx?$\": [\"ts-jest\", { diagnostics: false }] }, testMatch: [\"**/*.test.ts\", \"**/*.test.tsx\", \"**/*.spec.ts\", \"**/*.spec.tsx\"], moduleNameMapper: { \"^([.]{1,2}/.*)[.]js\$\": \"\$1\" } };" > jest.config.js
+
+and then run the tests again.
