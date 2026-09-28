@@ -15,6 +15,6 @@
     "should return null for signals below silence threshold",
     "should throw RangeError for frames too short for minHz"
   ],
-  "results_dir": "/home/user/projects/voice-coach/trajectories/20260928T153728Z-84db/red_check_pitch/20260928154413_red-1c454df3",
+  "results_dir": "/home/user/projects/voice-coach/trajectories/20260928T153728Z-84db/red_check_pitch/20260928154458_red-003939bc",
   "expect": "stub"
 }

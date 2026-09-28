@@ -1,30 +1,25 @@
 {
-  "outcome": "failed",
-  "reasons": [
-    " hzToBark throws RangeError for non-positive input:: hzToBark throws RangeError for non-positive input PASSES against the stub \u2014 it cannot tell a correct implementation from none",
-    " chartPosition throws RangeError for invalid inputs:: chartPosition throws RangeError for invalid inputs PASSES against the stub \u2014 it cannot tell a correct implementation from none",
-    " nearestVowel throws RangeError for invalid inputs:: nearestVowel throws RangeError for invalid inputs PASSES against the stub \u2014 it cannot tell a correct implementation from none",
-    " referenceSetFor throws RangeError for non-positive input:: referenceSetFor throws RangeError for non-positive input PASSES against the stub \u2014 it cannot tell a correct implementation from none",
-    "new test(s) never ran: (700, 1100) maps to \u0251 in the men\\"
-  ],
+  "outcome": "passed",
+  "reasons": [],
   "new_tests": {
-    " each reference vowel is its own nearest with distance 0:: each reference vowel is its own nearest with distance 0": "red",
-    " [i] is positioned left of and above [\u0251]:: [i] is positioned left of and above [\u0251]": "red",
-    " [u] is positioned right of [i] at a similar height:: [u] is positioned right of [i] at a similar height": "red",
-    " clamps coordinates at the edges:: clamps coordinates at the edges": "red",
-    " hzToBark(1000) is approximately 8.5:: hzToBark(1000) is approximately 8.5": "red",
-    " referenceSetFor correctly selects gender sets:: referenceSetFor correctly selects gender sets": "red",
-    " hzToBark throws RangeError for non-positive input:: hzToBark throws RangeError for non-positive input": "vacuous",
-    " chartPosition throws RangeError for invalid inputs:: chartPosition throws RangeError for invalid inputs": "vacuous",
-    " nearestVowel throws RangeError for invalid inputs:: nearestVowel throws RangeError for invalid inputs": "vacuous",
-    " referenceSetFor throws RangeError for non-positive input:: referenceSetFor throws RangeError for non-positive input": "vacuous"
+    "vowelChart REFERENCE_VOWELS contains the correct reference vowels for men::vowelChart REFERENCE_VOWELS contains the correct reference vowels for men": "vacuous",
+    "vowelChart REFERENCE_VOWELS contains the correct reference vowels for women::vowelChart REFERENCE_VOWELS contains the correct reference vowels for women": "vacuous",
+    "vowelChart hzToBark computes the Bark scale correctly::vowelChart hzToBark computes the Bark scale correctly": "red",
+    "vowelChart chartPosition positions front vowels (high F2) on the LEFT::vowelChart chartPosition positions front vowels (high F2) on the LEFT": "red",
+    "vowelChart chartPosition positions open vowels (high F1) at the BOTTOM::vowelChart chartPosition positions open vowels (high F1) at the BOTTOM": "red",
+    "vowelChart chartPosition positions [u] right of [i] at a similar height::vowelChart chartPosition positions [u] right of [i] at a similar height": "red",
+    "vowelChart chartPosition clamps positions at the edges::vowelChart chartPosition clamps positions at the edges": "red",
+    "vowelChart nearestVowel finds each reference vowel as its own nearest with distance 0::vowelChart nearestVowel finds each reference vowel as its own nearest with distance 0": "red",
+    "vowelChart nearestVowel finds \u0251 as the nearest vowel for (700, 1100) in the men's set::vowelChart nearestVowel finds \u0251 as the nearest vowel for (700, 1100) in the men's set": "red",
+    "vowelChart referenceSetFor returns \"men\" for median F0 below 165 Hz::vowelChart referenceSetFor returns \"men\" for median F0 below 165 Hz": "red",
+    "vowelChart referenceSetFor returns \"women\" for median F0 at or above 165 Hz::vowelChart referenceSetFor returns \"women\" for median F0 at or above 165 Hz": "red"
   },
-  "other_failures": [
-    " (700, 1100) maps to \u0251 in the men's set:: (700, 1100) maps to \u0251 in the men's set"
+  "other_failures": [],
+  "missing": [],
+  "vacuous": [
+    "contains the correct reference vowels for men",
+    "contains the correct reference vowels for women"
   ],
-  "missing": [
-    "(700, 1100) maps to \u0251 in the men\\"
-  ],
-  "results_dir": "/home/user/projects/voice-coach/trajectories/20260928T153728Z-84db/red_check_vowel_chart/20260928154246_red-6d29d561",
+  "results_dir": "/home/user/projects/voice-coach/trajectories/20260928T160618Z-6cd8/red_check_vowel_chart/20260928160638_red-4e4ac87e",
   "expect": "stub"
 }
