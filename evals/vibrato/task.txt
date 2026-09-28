@@ -1,0 +1,57 @@
+# Task: vibrato
+
+## Goal
+
+Implement vibrato detection from a pitch track, returning the rate in Hz and extent in cents for sustained oscillations between 3-9 Hz with sufficient amplitude, or null when no vibrato is detected.
+
+## Requirements
+
+1. detectVibrato must accept a track of PitchPoint objects in time order and return a Vibrato object with rateHz and extentCents properties, or null
+2. Points with gaps >0.1s must split the track; use the longest contiguous run that spans at least 1.0s and has at least 20 points
+3. Remove a least-squares linear trend from the detrended run before analysis
+4. rateHz must be computed from the dominant periodicity of the detrended run (e.g., via zero crossings or autocorrelation peak after resampling to 100 points per second)
+5. extentCents must be half the mean peak-to-trough excursion of the detrended run
+6. Return null when rateHz is outside [minRateHz, maxRateHz] or extentCents < minExtentCents
+7. Default options: minRateHz = 3, maxRateHz = 9, minExtentCents = 10
+
+## Files in scope
+
+- `src/analysis/vibrato.ts`
+
+## Context
+
+This is a new feature with no dependencies. Follow TypeScript conventions: named exports only, explicit types, and throw RangeError for invalid input. PitchPoint interface has timeSec and cents properties. The implementation must be pure (no DOM, no timers, no Math.random).
+
+## Rules (written by the harness, true for every task)
+
+- The tests already in this workspace define "done". They were written by a
+  separate agent and hashed before you started. Creating, changing or deleting
+  any test file fails the task, however good the rest of the work is.
+- Protected test files: `tests`, `**/*.test.ts`, `**/*.test.tsx`, `**/*.spec.ts`, `**/*.spec.tsx`.
+- Change only the files listed under "Files in scope" unless the task cannot be
+  done otherwise. Changes elsewhere are reported to the reviewer.
+- Run the tests yourself before finishing (commands below). The harness re-runs
+  them independently in a fresh container; your own report of the result is not
+  what decides whether the task passed.
+
+## How to run the tests
+
+Run the tests before finishing. The harness independently re-runs them and
+rejects the task if its trajectory shows no real test run.
+
+The test tooling is installed for you before this session starts, by
+`.openhands/setup.sh`. Normally you only need the run command below.
+
+### Commands
+
+Run the tests:
+
+    npx jest --ci
+
+If that reports the test runner is missing, the pre-install failed.
+Re-run it yourself, passing the terminal tool's `timeout` parameter as at
+least 900 seconds (otherwise the command is
+paused after 30 seconds with no new output and reports exit code -1 while
+it is still running):
+
+    if [ -f package.json ]; then ( npm ci --no-audit --no-fund || npm install --no-audit --no-fund ) || exit 1; fi; npm install --no-audit --no-fund --no-save jest@29 ts-jest@29 typescript @types/jest jest-junit || exit 1; printf "%s\n" "module.exports = { testEnvironment: \"node\", transform: { \"^.+[.]tsx?$\": [\"ts-jest\", { diagnostics: false }] }, testMatch: [\"**/*.test.ts\", \"**/*.test.tsx\", \"**/*.spec.ts\", \"**/*.spec.tsx\"], moduleNameMapper: { \"^([.]{1,2}/.*)[.]js\$\": \"\$1\" } };" > jest.config.js

@@ -1,0 +1,31 @@
+{
+  "outcome": "passed",
+  "reasons": [],
+  "new_tests": {
+    "rmsDbfs computes RMS of a full-scale sine::rmsDbfs computes RMS of a full-scale sine": "red",
+    "rmsDbfs returns -120 for silence::rmsDbfs returns -120 for silence": "red",
+    "peakDbfs computes peak of a full-scale sine::peakDbfs computes peak of a full-scale sine": "red",
+    "peakDbfs returns -120 for silence::peakDbfs returns -120 for silence": "red",
+    "hannWindow generates a symmetric Hann window::hannWindow generates a symmetric Hann window": "red",
+    "fft computes FFT of a simple sequence::fft computes FFT of a simple sequence": "red",
+    "fft throws RangeError for mismatched lengths::fft throws RangeError for mismatched lengths": "red",
+    "fft throws RangeError for non-power-of-two length::fft throws RangeError for non-power-of-two length": "red",
+    "magnitudeSpectrumDb computes magnitude spectrum of a sine at bin 100::magnitudeSpectrumDb computes magnitude spectrum of a sine at bin 100": "red",
+    "magnitudeSpectrumDb handles silence correctly::magnitudeSpectrumDb handles silence correctly": "red",
+    "binFrequency computes correct bin frequencies::binFrequency computes correct bin frequencies": "red",
+    "sine generates a sine wave with correct amplitude and phase::sine generates a sine wave with correct amplitude and phase": "red",
+    "harmonicTone generates a harmonic tone with correct peak amplitude::harmonicTone generates a harmonic tone with correct peak amplitude": "red",
+    "vibratoTone generates a vibrato tone with varying frequency::vibratoTone generates a vibrato tone with varying frequency": "red",
+    "whiteNoise generates consistent noise for the same seed::whiteNoise generates consistent noise for the same seed": "red",
+    "whiteNoise generates different noise for different seeds::whiteNoise generates different noise for different seeds": "red",
+    "whiteNoise keeps all samples within amplitude bounds::whiteNoise keeps all samples within amplitude bounds": "red",
+    "pulseTrain generates pulses at correct positions::pulseTrain generates pulses at correct positions": "red",
+    "resonate applies resonance filtering::resonate applies resonance filtering": "red",
+    "mix mixes two signals correctly::mix mixes two signals correctly": "red",
+    "scaleToRms scales signal to target RMS level::scaleToRms scales signal to target RMS level": "red"
+  },
+  "other_failures": [],
+  "missing": [],
+  "results_dir": "/home/user/projects/voice-coach/trajectories/20260928T152604Z-3721/red_check_signal_basics/20260928152813_red-392fdb82",
+  "expect": "stub"
+}

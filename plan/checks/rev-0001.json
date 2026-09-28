@@ -1,0 +1,116 @@
+{
+  "revision": 1,
+  "checkpoint": "plan",
+  "outcome": "passed",
+  "model": "openrouter/openai/gpt-oss-120b",
+  "summary": "The plan covers all explicit requests: real\u2011time analysis, pitch, spectrogram, trainer\u2011style features, plain\u2011language explanations, and a simple UI. Two aspects remain ambiguous because the request left design choices open: which trainer\u2011inspired features to include and what constitutes an easy\u2011to\u2011use interface.",
+  "warning": "",
+  "reason": "",
+  "counts": {
+    "covered": 9,
+    "missing": 0,
+    "unrequested": 0,
+    "ambiguous": 2
+  },
+  "claims": [
+    {
+      "kind": "covered",
+      "subject": "real-time voice analysis",
+      "pointer": "requirement:R1",
+      "explanation": "The plan includes requirement R1 which mandates continuous analysis of the live microphone signal when the user starts, fulfilling the request for real\u2011time voice analysis.",
+      "resolved": true,
+      "note": "",
+      "downgraded": false
+    },
+    {
+      "kind": "covered",
+      "subject": "basic pitch information",
+      "pointer": "requirement:R2",
+      "explanation": "Requirement R2 specifies showing the fundamental frequency, nearest note, and cents deviation, delivering the requested basic pitch data.",
+      "resolved": true,
+      "note": "",
+      "downgraded": false
+    },
+    {
+      "kind": "covered",
+      "subject": "spectrogram display",
+      "pointer": "requirement:R4",
+      "explanation": "Requirement R4 provides a live scrolling spectrogram, satisfying the request for more complex information like a spectrogram.",
+      "resolved": true,
+      "note": "",
+      "downgraded": false
+    },
+    {
+      "kind": "covered",
+      "subject": "pitch trace (singing trainer style)",
+      "pointer": "requirement:R3",
+      "explanation": "Requirement R3 adds a scrolling pitch trace over the last 8\u202fseconds, a common feature of singing trainer apps.",
+      "resolved": true,
+      "note": "",
+      "downgraded": false
+    },
+    {
+      "kind": "covered",
+      "subject": "formant estimation and vowel chart",
+      "pointer": "requirement:R6",
+      "explanation": "Requirement R6 estimates the first two formants and plots them on a vowel chart, mirroring features of accent\u2011training applications.",
+      "resolved": true,
+      "note": "",
+      "downgraded": false
+    },
+    {
+      "kind": "covered",
+      "subject": "voice\u2011quality measures (jitter, shimmer, HNR)",
+      "pointer": "requirement:R7",
+      "explanation": "Requirement R7 reports jitter, shimmer and harmonics\u2011to\u2011noise ratio, which are typical voice\u2011quality metrics used in speech\u2011training tools.",
+      "resolved": true,
+      "note": "",
+      "downgraded": false
+    },
+    {
+      "kind": "covered",
+      "subject": "vibrato detection",
+      "pointer": "requirement:R8",
+      "explanation": "Requirement R8 detects vibrato rate and extent, a feature commonly found in singing trainer apps.",
+      "resolved": true,
+      "note": "",
+      "downgraded": false
+    },
+    {
+      "kind": "covered",
+      "subject": "plain\u2011language explanations for each measure",
+      "pointer": "requirement:R10",
+      "explanation": "Requirement R10 mandates that every displayed measure be explained in plain language, fulfilling the request to \u201ctell me about it.\u201d",
+      "resolved": true,
+      "note": "",
+      "downgraded": false
+    },
+    {
+      "kind": "covered",
+      "subject": "easy\u2011to\u2011use single Start/Stop UI",
+      "pointer": "requirement:R12",
+      "explanation": "Requirement R12 specifies a desktop\u2011browser app with a single Start/Stop button as the only control, addressing the request for ease of use.",
+      "resolved": true,
+      "note": "",
+      "downgraded": false
+    },
+    {
+      "kind": "ambiguous",
+      "subject": "take inspiration from existing singing or accent trainer apps",
+      "pointer": "request:\"take inspiration from existing singing or accent trainer apps\"",
+      "explanation": "The request leaves the choice of which trainer\u2011style features to include open; the plan selected a specific set (pitch trace, formants, vowel chart, voice\u2011quality, vibrato). Human confirmation is needed that this selection matches the intended inspiration.",
+      "resolved": true,
+      "note": "",
+      "downgraded": false
+    },
+    {
+      "kind": "ambiguous",
+      "subject": "I want it to be easy to use",
+      "pointer": "request:\"I want it to be easy to use\"",
+      "explanation": "The request does not define what \u201ceasy to use\u201d means; the plan chose a minimal UI with a single button and simple panels, which is a design decision requiring confirmation.",
+      "resolved": true,
+      "note": "",
+      "downgraded": false
+    }
+  ]
+}

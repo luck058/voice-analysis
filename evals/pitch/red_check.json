@@ -1,0 +1,20 @@
+{
+  "outcome": "failed",
+  "reasons": [
+    "new test(s) never ran: should detect harmonic tones within 1% (avoiding octave errors), should detect sine waves within 0.5% with clarity > 0.9, should meet performance requirement (50 calls in under 2 seconds), should respect maxHz limit, should return null for all zero frames, should return null for most white noise inputs, should return null for signals below silence threshold, should throw RangeError for frames too short for minHz"
+  ],
+  "new_tests": {},
+  "other_failures": [],
+  "missing": [
+    "should detect harmonic tones within 1% (avoiding octave errors)",
+    "should detect sine waves within 0.5% with clarity > 0.9",
+    "should meet performance requirement (50 calls in under 2 seconds)",
+    "should respect maxHz limit",
+    "should return null for all zero frames",
+    "should return null for most white noise inputs",
+    "should return null for signals below silence threshold",
+    "should throw RangeError for frames too short for minHz"
+  ],
+  "results_dir": "/home/user/projects/voice-coach/trajectories/20260928T153728Z-84db/red_check_pitch/20260928154413_red-1c454df3",
+  "expect": "stub"
+}

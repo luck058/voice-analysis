@@ -1,0 +1,30 @@
+{
+  "outcome": "failed",
+  "reasons": [
+    " hzToBark throws RangeError for non-positive input:: hzToBark throws RangeError for non-positive input PASSES against the stub \u2014 it cannot tell a correct implementation from none",
+    " chartPosition throws RangeError for invalid inputs:: chartPosition throws RangeError for invalid inputs PASSES against the stub \u2014 it cannot tell a correct implementation from none",
+    " nearestVowel throws RangeError for invalid inputs:: nearestVowel throws RangeError for invalid inputs PASSES against the stub \u2014 it cannot tell a correct implementation from none",
+    " referenceSetFor throws RangeError for non-positive input:: referenceSetFor throws RangeError for non-positive input PASSES against the stub \u2014 it cannot tell a correct implementation from none",
+    "new test(s) never ran: (700, 1100) maps to \u0251 in the men\\"
+  ],
+  "new_tests": {
+    " each reference vowel is its own nearest with distance 0:: each reference vowel is its own nearest with distance 0": "red",
+    " [i] is positioned left of and above [\u0251]:: [i] is positioned left of and above [\u0251]": "red",
+    " [u] is positioned right of [i] at a similar height:: [u] is positioned right of [i] at a similar height": "red",
+    " clamps coordinates at the edges:: clamps coordinates at the edges": "red",
+    " hzToBark(1000) is approximately 8.5:: hzToBark(1000) is approximately 8.5": "red",
+    " referenceSetFor correctly selects gender sets:: referenceSetFor correctly selects gender sets": "red",
+    " hzToBark throws RangeError for non-positive input:: hzToBark throws RangeError for non-positive input": "vacuous",
+    " chartPosition throws RangeError for invalid inputs:: chartPosition throws RangeError for invalid inputs": "vacuous",
+    " nearestVowel throws RangeError for invalid inputs:: nearestVowel throws RangeError for invalid inputs": "vacuous",
+    " referenceSetFor throws RangeError for non-positive input:: referenceSetFor throws RangeError for non-positive input": "vacuous"
+  },
+  "other_failures": [
+    " (700, 1100) maps to \u0251 in the men's set:: (700, 1100) maps to \u0251 in the men's set"
+  ],
+  "missing": [
+    "(700, 1100) maps to \u0251 in the men\\"
+  ],
+  "results_dir": "/home/user/projects/voice-coach/trajectories/20260928T153728Z-84db/red_check_vowel_chart/20260928154246_red-6d29d561",
+  "expect": "stub"
+}

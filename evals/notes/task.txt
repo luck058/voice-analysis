@@ -1,0 +1,56 @@
+# Task: notes
+
+## Goal
+
+Implement the music theory functions that convert between frequency, MIDI note numbers, note names, and cents. These functions will be used by the pitch detector to display the musical note information for the user's voice pitch.
+
+## Requirements
+
+1. hzToMidi(hz, a4) returns fractional MIDI number: 69 + 12*log2(hz/a4)
+2. midiToHz(midi, a4) returns frequency: a4 * 2^((midi - 69)/12)
+3. noteName(midi) returns string in scientific pitch notation with sharps only (e.g., 60 -> 'C4', 61 -> 'C#4', 69 -> 'A4')
+4. hzToNote(hz, a4) returns NoteInfo with nearest integer MIDI, note name without octave, octave number, and cents in [-50, 50)
+5. hzToMidi and hzToNote throw RangeError when hz is not a finite number > 0
+6. midiToHz(hzToMidi(x)) round-trips within floating-point precision
+
+## Files in scope
+
+- `src/music/notes.ts`
+
+## Context
+
+Follow TypeScript conventions: named exports only, explicit types. Use ES module syntax (import/export). The config.ts file exists with A4_HZ constant. Invalid input should throw RangeError with a message naming the parameter. 'No answer' cases (like silence) are handled elsewhere as null, not in these functions.
+
+## Rules (written by the harness, true for every task)
+
+- The tests already in this workspace define "done". They were written by a
+  separate agent and hashed before you started. Creating, changing or deleting
+  any test file fails the task, however good the rest of the work is.
+- Protected test files: `tests`, `**/*.test.ts`, `**/*.test.tsx`, `**/*.spec.ts`, `**/*.spec.tsx`.
+- Change only the files listed under "Files in scope" unless the task cannot be
+  done otherwise. Changes elsewhere are reported to the reviewer.
+- Run the tests yourself before finishing (commands below). The harness re-runs
+  them independently in a fresh container; your own report of the result is not
+  what decides whether the task passed.
+
+## How to run the tests
+
+Run the tests before finishing. The harness independently re-runs them and
+rejects the task if its trajectory shows no real test run.
+
+The test tooling is installed for you before this session starts, by
+`.openhands/setup.sh`. Normally you only need the run command below.
+
+### Commands
+
+Run the tests:
+
+    npx jest --ci
+
+If that reports the test runner is missing, the pre-install failed.
+Re-run it yourself, passing the terminal tool's `timeout` parameter as at
+least 900 seconds (otherwise the command is
+paused after 30 seconds with no new output and reports exit code -1 while
+it is still running):
+
+    if [ -f package.json ]; then ( npm ci --no-audit --no-fund || npm install --no-audit --no-fund ) || exit 1; fi; npm install --no-audit --no-fund --no-save jest@29 ts-jest@29 typescript @types/jest jest-junit || exit 1; printf "%s\n" "module.exports = { testEnvironment: \"node\", transform: { \"^.+[.]tsx?$\": [\"ts-jest\", { diagnostics: false }] }, testMatch: [\"**/*.test.ts\", \"**/*.test.tsx\", \"**/*.spec.ts\", \"**/*.spec.tsx\"], moduleNameMapper: { \"^([.]{1,2}/.*)[.]js\$\": \"\$1\" } };" > jest.config.js

@@ -1,0 +1,53 @@
+{
+  "base_commit": "94b382dcac6df1f076b7226be8360ec18f627efe",
+  "branch": "harness/item/signal_basics",
+  "files": [
+    "src/testing/synth.ts",
+    "src/testing/synth.test.ts",
+    "src/dsp/fft.ts",
+    "src/dsp/fft.test.ts",
+    "src/dsp/level.ts",
+    "src/dsp/level.test.ts"
+  ],
+  "fingerprint": "0966dc0335e4aafa",
+  "item": "signal_basics",
+  "modifies_tests": [],
+  "new_tests": [
+    "applies resonance filtering",
+    "computes FFT of a simple sequence",
+    "computes RMS of a full-scale sine",
+    "computes correct bin frequencies",
+    "computes magnitude spectrum of a sine at bin 100",
+    "computes peak of a full-scale sine",
+    "generates a harmonic tone with correct peak amplitude",
+    "generates a sine wave with correct amplitude and phase",
+    "generates a symmetric Hann window",
+    "generates a vibrato tone with varying frequency",
+    "generates consistent noise for the same seed",
+    "generates different noise for different seeds",
+    "generates pulses at correct positions",
+    "handles silence correctly",
+    "keeps all samples within amplitude bounds",
+    "mixes two signals correctly",
+    "returns -120 for silence",
+    "scales signal to target RMS level",
+    "throws RangeError for mismatched lengths",
+    "throws RangeError for non-power-of-two length"
+  ],
+  "profile": "feature",
+  "red_check": "passed",
+  "scaffold_commit": "7fb810844cf5d04dd76dd2ef1ea26acc036ca743",
+  "scaffolded_at": "2026-09-28T15:28:35.568985+00:00",
+  "scaffolder_model": "openrouter/deepseek/deepseek-v3.2",
+  "stub_files": [
+    "src/dsp/fft.ts",
+    "src/dsp/level.ts",
+    "src/testing/synth.ts"
+  ],
+  "test_files": [
+    "src/dsp/fft.test.ts",
+    "src/dsp/level.test.ts",
+    "src/testing/synth.test.ts"
+  ],
+  "test_writer_model": "openrouter/qwen/qwen3-coder"
+}

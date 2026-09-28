@@ -1,0 +1,66 @@
+# Task: signal_basics
+
+## Goal
+
+Implement deterministic signal generators for testing, FFT operations for spectrum analysis, and level measurement functions. These are foundational DSP modules that will be used by all subsequent audio analysis components.
+
+## Requirements
+
+1. sine() must generate a pure sine wave at the specified frequency, amplitude, and phase
+2. harmonicTone() must generate a band-limited sawtooth wave with harmonics up to Nyquist limit, scaled to the given amplitude
+3. vibratoTone() must generate a sine wave with frequency modulation using phase accumulation (no discontinuities)
+4. whiteNoise() must generate reproducible uniform noise using mulberry32 PRNG with the given seed
+5. pulseTrain() must generate pulses at specified time intervals with raised-cosine shape
+6. resonate() must apply formant filtering using Klatt two-pole resonators in cascade
+7. mix() must sum two signals sample-wise, handling different lengths
+8. scaleToRms() must scale a signal to achieve the specified RMS level in dBFS
+9. hannWindow() must generate a symmetric Hann window of the given size
+10. fft() must perform in-place radix-2 FFT on complex arrays, throwing RangeError for invalid inputs
+11. magnitudeSpectrumDb() must compute dB magnitude spectrum with Hann window and proper normalization, flooring at -120 dB
+12. binFrequency() must compute frequency for a given FFT bin
+13. rmsDbfs() must compute RMS level in dBFS, returning -120 for silence
+14. peakDbfs() must compute peak level in dBFS, returning -120 for silence
+
+## Files in scope
+
+- `src/testing/synth.ts`
+- `src/dsp/fft.ts`
+- `src/dsp/level.ts`
+
+## Context
+
+All modules must be pure TypeScript with no DOM or browser APIs. Use Float32Array for audio signals. Follow the exact interface specifications from architecture.md. Invalid inputs should throw RangeError with descriptive messages. 'No answer' cases (like silence) should return null or appropriate default values, never exceptions or NaN. All functions must be deterministic and testable.
+
+## Rules (written by the harness, true for every task)
+
+- The tests already in this workspace define "done". They were written by a
+  separate agent and hashed before you started. Creating, changing or deleting
+  any test file fails the task, however good the rest of the work is.
+- Protected test files: `tests`, `**/*.test.ts`, `**/*.test.tsx`, `**/*.spec.ts`, `**/*.spec.tsx`.
+- Change only the files listed under "Files in scope" unless the task cannot be
+  done otherwise. Changes elsewhere are reported to the reviewer.
+- Run the tests yourself before finishing (commands below). The harness re-runs
+  them independently in a fresh container; your own report of the result is not
+  what decides whether the task passed.
+
+## How to run the tests
+
+Run the tests before finishing. The harness independently re-runs them and
+rejects the task if its trajectory shows no real test run.
+
+The test tooling is installed for you before this session starts, by
+`.openhands/setup.sh`. Normally you only need the run command below.
+
+### Commands
+
+Run the tests:
+
+    npx jest --ci
+
+If that reports the test runner is missing, the pre-install failed.
+Re-run it yourself, passing the terminal tool's `timeout` parameter as at
+least 900 seconds (otherwise the command is
+paused after 30 seconds with no new output and reports exit code -1 while
+it is still running):
+
+    if [ -f package.json ]; then ( npm ci --no-audit --no-fund || npm install --no-audit --no-fund ) || exit 1; fi; npm install --no-audit --no-fund --no-save jest@29 ts-jest@29 typescript @types/jest jest-junit || exit 1; printf "%s\n" "module.exports = { testEnvironment: \"node\", transform: { \"^.+[.]tsx?$\": [\"ts-jest\", { diagnostics: false }] }, testMatch: [\"**/*.test.ts\", \"**/*.test.tsx\", \"**/*.spec.ts\", \"**/*.spec.tsx\"] };" > jest.config.js

@@ -1,0 +1,60 @@
+# Task: pitch
+
+## Goal
+
+Implement the YIN pitch detection algorithm to estimate the fundamental frequency of an audio frame. This will enable the voice coach to show the user's pitch in Hz, the nearest musical note, and how many cents sharp or flat they are relative to that note when they make a voiced sound, and show no pitch when the input is silent or unvoiced.
+
+## Requirements
+
+1. detectPitch(frame, sampleRate, options) must return a PitchResult with hz and clarity when a fundamental frequency is detected in the given range
+2. detectPitch must return null when the frame is silent (RMS < SILENCE_DBFS)
+3. detectPitch must return null when no lag in the search range goes below the threshold
+4. detectPitch must return null when the computed frequency would fall outside [minHz, maxHz]
+5. detectPitch must throw RangeError when the frame is shorter than 2 * sampleRate / minHz samples
+6. detectPitch must be fast: 50 calls on 2048-sample frames at 48 kHz must take under 2 seconds total in tests
+7. detectPitch must be accurate: sines at 70, 110, 220, 440, 880, 1000 Hz (amplitude 0.5) within 0.5% with clarity > 0.9
+8. detectPitch must handle harmonic tones without octave errors: harmonicTone at 100, 200, 400, 800 Hz within 1%
+9. detectPitch must reject noise: whiteNoise at amplitude 0.5 with seeds 1-10 returns null for at least 9 of 10
+10. detectPitch must respect maxHz option: a 1000 Hz sine with maxHz=500 never returns a value above 500
+
+## Files in scope
+
+- `src/dsp/pitch.ts`
+
+## Context
+
+This is a feature implementation. The signal_basics dependency (which includes src/dsp/level.ts for RMS calculation) is still a stub and may need implementing for this task's tests to work. Use ES module syntax (import/export). Type every exported function's parameters and return value explicitly. Invalid input throws RangeError with a message naming the parameter. 'No answer' (silence, unvoiced audio) returns null, never an exception and never NaN. The config.ts file exists with constants: DEFAULT_SAMPLE_RATE, FRAME_SIZE, HOP_SIZE, PITCH_MIN_HZ, PITCH_MAX_HZ, A4_HZ, SILENCE_DBFS.
+
+## Rules (written by the harness, true for every task)
+
+- The tests already in this workspace define "done". They were written by a
+  separate agent and hashed before you started. Creating, changing or deleting
+  any test file fails the task, however good the rest of the work is.
+- Protected test files: `tests`, `**/*.test.ts`, `**/*.test.tsx`, `**/*.spec.ts`, `**/*.spec.tsx`.
+- Change only the files listed under "Files in scope" unless the task cannot be
+  done otherwise. Changes elsewhere are reported to the reviewer.
+- Run the tests yourself before finishing (commands below). The harness re-runs
+  them independently in a fresh container; your own report of the result is not
+  what decides whether the task passed.
+
+## How to run the tests
+
+Run the tests before finishing. The harness independently re-runs them and
+rejects the task if its trajectory shows no real test run.
+
+The test tooling is installed for you before this session starts, by
+`.openhands/setup.sh`. Normally you only need the run command below.
+
+### Commands
+
+Run the tests:
+
+    npx jest --ci
+
+If that reports the test runner is missing, the pre-install failed.
+Re-run it yourself, passing the terminal tool's `timeout` parameter as at
+least 900 seconds (otherwise the command is
+paused after 30 seconds with no new output and reports exit code -1 while
+it is still running):
+
+    if [ -f package.json ]; then ( npm ci --no-audit --no-fund || npm install --no-audit --no-fund ) || exit 1; fi; npm install --no-audit --no-fund --no-save jest@29 ts-jest@29 typescript @types/jest jest-junit || exit 1; printf "%s\n" "module.exports = { testEnvironment: \"node\", transform: { \"^.+[.]tsx?$\": [\"ts-jest\", { diagnostics: false }] }, testMatch: [\"**/*.test.ts\", \"**/*.test.tsx\", \"**/*.spec.ts\", \"**/*.spec.tsx\"], moduleNameMapper: { \"^([.]{1,2}/.*)[.]js\$\": \"\$1\" } };" > jest.config.js

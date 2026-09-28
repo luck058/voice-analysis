@@ -1,0 +1,46 @@
+{
+  "base_commit": "94b382dcac6df1f076b7226be8360ec18f627efe",
+  "branch": "harness/item/notes",
+  "files": [
+    "src/music/notes.ts",
+    "src/music/notes.test.ts"
+  ],
+  "fingerprint": "d125cc6a71b0e523",
+  "item": "notes",
+  "modifies_tests": [],
+  "new_tests": [
+    "converts 261.63 Hz to C4 with approximately 0 cents",
+    "converts 261.63 Hz to approximately MIDI 60 (C4)",
+    "converts 27.5 Hz to A0",
+    "converts 440 Hz to A4 with 0 cents",
+    "converts 440 Hz to MIDI 69 (A4)",
+    "converts 445 Hz to A4 with approximately +19.56 cents",
+    "converts 466.16 Hz to A#4",
+    "converts MIDI 21 to \"A0\"",
+    "converts MIDI 60 to \"C4\"",
+    "converts MIDI 60 to approximately 261.63 Hz (C4)",
+    "converts MIDI 61 to \"C#4\"",
+    "converts MIDI 69 to \"A4\"",
+    "converts MIDI 69 to 440 Hz (A4)",
+    "handles all note names with sharps",
+    "handles the 50-cent boundary correctly",
+    "round-trips with hzToMidi",
+    "throws RangeError for NaN frequency",
+    "throws RangeError for infinite frequency",
+    "throws RangeError for negative frequency",
+    "throws RangeError for zero frequency",
+    "uses custom A4 frequency"
+  ],
+  "profile": "feature",
+  "red_check": "passed",
+  "scaffold_commit": "0cfb8c6c62643074123a3d7691245a4e2d86f587",
+  "scaffolded_at": "2026-09-28T15:38:55.837393+00:00",
+  "scaffolder_model": "openrouter/deepseek/deepseek-v3.2",
+  "stub_files": [
+    "src/music/notes.ts"
+  ],
+  "test_files": [
+    "src/music/notes.test.ts"
+  ],
+  "test_writer_model": "openrouter/qwen/qwen3-coder"
+}

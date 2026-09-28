@@ -1,0 +1,18 @@
+{
+  "outcome": "passed",
+  "reasons": [],
+  "new_tests": {
+    "detectVibrato detects vibrato with correct rate and extent::detectVibrato detects vibrato with correct rate and extent": "red",
+    "detectVibrato detects vibrato with linear drift removed::detectVibrato detects vibrato with linear drift removed": "red",
+    "detectVibrato returns null for a flat track::detectVibrato returns null for a flat track": "red",
+    "detectVibrato returns null for vibrato too slow::detectVibrato returns null for vibrato too slow": "red",
+    "detectVibrato returns null for vibrato too small::detectVibrato returns null for vibrato too small": "red",
+    "detectVibrato returns null for track too short::detectVibrato returns null for track too short": "red",
+    "detectVibrato handles gaps in the track by using the longest contiguous segment::detectVibrato handles gaps in the track by using the longest contiguous segment": "red",
+    "detectVibrato throws RangeError for invalid options::detectVibrato throws RangeError for invalid options": "red"
+  },
+  "other_failures": [],
+  "missing": [],
+  "results_dir": "/home/user/projects/voice-coach/trajectories/20260928T153728Z-84db/red_check_vibrato/20260928153959_red-cb613edf",
+  "expect": "stub"
+}
