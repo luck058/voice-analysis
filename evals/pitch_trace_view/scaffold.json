@@ -1,0 +1,44 @@
+{
+  "base_commit": "3f119cf4646c28d1bd4fe5651e243d32558a06c7",
+  "branch": "harness/item/pitch_trace_view",
+  "files": [
+    "src/views/pitchTrace.ts",
+    "src/views/pitchTrace.test.ts"
+  ],
+  "fingerprint": "e2eadbbaf2c6fd31",
+  "item": "pitch_trace_view",
+  "modifies_tests": [],
+  "new_tests": [
+    "should add a point",
+    "should calculate x coordinates correctly",
+    "should clamp values above maxMidi to 0",
+    "should clamp values below minMidi to height",
+    "should convert Hz to MIDI for y coordinates",
+    "should create one segment for consecutive voiced points",
+    "should create separate segments for gaps > 0.1s",
+    "should create separate segments for voiced-null-voiced",
+    "should discard points older than windowSec",
+    "should generate correct number of grid lines",
+    "should have correct y values",
+    "should keep single-point segments",
+    "should map 69 MIDI (440 Hz) correctly",
+    "should map linearly between extremes",
+    "should map maxMidi to 0",
+    "should map minMidi to height",
+    "should map nowSec - windowSec to 0",
+    "should map nowSec to width",
+    "should mark C notes correctly"
+  ],
+  "profile": "feature",
+  "red_check": "passed",
+  "scaffold_commit": "4d744e20c12db1d518e573fb83765f05aa56697a",
+  "scaffolded_at": "2026-09-28T19:50:49.619202+00:00",
+  "scaffolder_model": "openrouter/deepseek/deepseek-v3.2",
+  "stub_files": [
+    "src/views/pitchTrace.ts"
+  ],
+  "test_files": [
+    "src/views/pitchTrace.test.ts"
+  ],
+  "test_writer_model": "openrouter/qwen/qwen3-coder"
+}

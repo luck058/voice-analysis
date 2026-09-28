@@ -2,24 +2,24 @@
 
 ## Goal
 
-Implement deterministic signal generators for testing, FFT operations for spectrum analysis, and level measurement functions. These are foundational DSP modules that will be used by all subsequent audio analysis components.
+Implement deterministic signal generators for testing, FFT operations for spectral analysis, and level measurement functions. These are foundational DSP modules that will be used by all subsequent audio analysis components.
 
 ## Requirements
 
 1. sine() must generate a pure sine wave at the specified frequency, amplitude, and phase
-2. harmonicTone() must generate a band-limited sawtooth wave with harmonics up to Nyquist limit, scaled to the given amplitude
-3. vibratoTone() must generate a sine wave with frequency modulation using phase accumulation (no discontinuities)
-4. whiteNoise() must generate reproducible uniform noise using mulberry32 PRNG with the given seed
-5. pulseTrain() must generate pulses at specified time intervals with raised-cosine shape
-6. resonate() must apply formant filtering using Klatt two-pole resonators in cascade
-7. mix() must sum two signals sample-wise, handling different lengths
+2. harmonicTone() must generate a band-limited sawtooth wave with harmonics up to the specified count, scaled to the given amplitude
+3. vibratoTone() must generate a sine wave with frequency modulation following the specified vibrato rate and extent, using phase accumulation for smooth transitions
+4. whiteNoise() must generate deterministic pseudo-random noise using the mulberry32 PRNG, with the same seed always producing the same samples
+5. pulseTrain() must generate a series of raised-cosine pulses at the specified time intervals
+6. resonate() must apply a cascade of Klatt two-pole resonators to filter a signal according to the given formant frequencies and bandwidths
+7. mix() must perform sample-wise addition of two signals, handling different lengths by using the longer signal's length
 8. scaleToRms() must scale a signal to achieve the specified RMS level in dBFS
-9. hannWindow() must generate a symmetric Hann window of the given size
-10. fft() must perform in-place radix-2 FFT on complex arrays, throwing RangeError for invalid inputs
-11. magnitudeSpectrumDb() must compute dB magnitude spectrum with Hann window and proper normalization, flooring at -120 dB
-12. binFrequency() must compute frequency for a given FFT bin
-13. rmsDbfs() must compute RMS level in dBFS, returning -120 for silence
-14. peakDbfs() must compute peak level in dBFS, returning -120 for silence
+9. hannWindow() must generate a symmetric Hann window with the correct values at all points
+10. fft() must perform an in-place radix-2 FFT on complex arrays, throwing RangeError for invalid inputs
+11. magnitudeSpectrumDb() must compute the dB magnitude spectrum of a frame with Hann windowing and proper normalization
+12. binFrequency() must compute the frequency of an FFT bin given sample rate and frame size
+13. rmsDbfs() must compute the RMS level in dBFS, returning -120 for silence
+14. peakDbfs() must compute the peak level in dBFS, returning -120 for silence
 
 ## Files in scope
 
@@ -29,7 +29,7 @@ Implement deterministic signal generators for testing, FFT operations for spectr
 
 ## Context
 
-All modules must be pure TypeScript with no DOM or browser APIs. Use Float32Array for audio signals. Follow the exact interface specifications from architecture.md. Invalid inputs should throw RangeError with descriptive messages. 'No answer' cases (like silence) should return null or appropriate default values, never exceptions or NaN. All functions must be deterministic and testable.
+All modules must be pure TypeScript with no DOM or browser APIs. Use Float32Array for audio signals. Invalid inputs should throw RangeError with descriptive messages. 'No answer' cases (like silence) should return null or a sentinel value, not throw. All exported functions must have explicit type annotations. Use ES module syntax (import/export). The config.ts module with constants like DEFAULT_SAMPLE_RATE exists but is not required for these implementations.
 
 ## Rules (written by the harness, true for every task)
 

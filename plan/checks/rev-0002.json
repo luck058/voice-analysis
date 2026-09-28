@@ -1,0 +1,62 @@
+{
+  "revision": 2,
+  "checkpoint": "plan",
+  "outcome": "passed",
+  "model": "openrouter/openai/gpt-oss-120b",
+  "summary": "All explicit requests\u2014real\u2011time analysis, basic pitch, spectrogram, and a simple UI\u2014are covered by the plan. The only ambiguous area is the choice of additional features inspired by singing or accent\u2011trainer apps, which should be confirmed.",
+  "warning": "",
+  "reason": "",
+  "counts": {
+    "covered": 4,
+    "missing": 0,
+    "unrequested": 0,
+    "ambiguous": 1
+  },
+  "claims": [
+    {
+      "kind": "covered",
+      "subject": "real-time voice analysis",
+      "pointer": "requirement:R1",
+      "explanation": "Requirement R1 specifies continuous live microphone analysis at least 20 times per second, fulfilling the request for real\u2011time voice analysis.",
+      "resolved": true,
+      "note": "",
+      "downgraded": false
+    },
+    {
+      "kind": "covered",
+      "subject": "basic pitch information",
+      "pointer": "requirement:R2",
+      "explanation": "Requirement R2 provides fundamental frequency, note name, and cents, delivering the basic pitch information requested.",
+      "resolved": true,
+      "note": "",
+      "downgraded": false
+    },
+    {
+      "kind": "covered",
+      "subject": "spectrogram display",
+      "pointer": "requirement:R4",
+      "explanation": "Requirement R4 defines a live scrolling spectrogram, satisfying the request for complex information like a spectrogram.",
+      "resolved": true,
+      "note": "",
+      "downgraded": false
+    },
+    {
+      "kind": "ambiguous",
+      "subject": "inspiration from singing or accent trainer apps",
+      "pointer": "request:\"take inspiration from existing singing or accent trainer apps\"",
+      "explanation": "The plan chose specific features (pitch trace, formants, vowel chart, voice\u2011quality measures, vibrato) to reflect singing/accent\u2011trainer apps; a reviewer must confirm these are the intended additions.",
+      "resolved": true,
+      "note": "",
+      "downgraded": false
+    },
+    {
+      "kind": "covered",
+      "subject": "easy\u2011to\u2011use UI",
+      "pointer": "requirement:R12",
+      "explanation": "Requirement R12 specifies a single Start/Stop button as the only control, meeting the request for an easy\u2011to\u2011use interface.",
+      "resolved": true,
+      "note": "",
+      "downgraded": false
+    }
+  ]
+}

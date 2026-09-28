@@ -1,34 +1,78 @@
-<!-- GENERATED from plan/rev-0002.toml by `harness plan show`. Do not edit. -->
-# Plan — revision 2
+schema = 1
+revision = 2
+parent = 1
+requests = [
+    "r-20260927-01",
+]
+author = "operator"
+reason = "signal_basics: state hannWindow's worked values; the generated test contradicted the formula (M0.8)"
+created = "2026-09-28T19:47:45.214303+00:00"
 
-parent: 1 · author: operator · created: 2026-09-28T19:47:45 · requests: r-20260927-01
+[[requirement]]
+id = "R1"
+text = "WHEN the user presses Start and allows microphone access, THE SYSTEM SHALL analyse the live microphone signal continuously, at least 20 analyses per second, until the user presses Stop."
+request = "r-20260927-01"
 
-> signal_basics: state hannWindow's worked values; the generated test contradicted the formula (M0.8)
+[[requirement]]
+id = "R2"
+text = "WHILE the user makes a voiced sound, THE SYSTEM SHALL show the fundamental frequency in Hz, the nearest note with its octave, and how many cents sharp or flat of that note it is; WHILE the input is silent or unvoiced, it SHALL show that no pitch is detected."
+request = "r-20260927-01"
 
-## Requirements
+[[requirement]]
+id = "R3"
+text = "THE SYSTEM SHALL show a scrolling trace of the pitch over the last 8 seconds on a grid of musical notes, as singing trainers do."
+request = "r-20260927-01"
 
-| id | requirement | covered by |
-|---|---|---|
-| R1 | WHEN the user presses Start and allows microphone access, THE SYSTEM SHALL analyse the live microphone signal continuously, at least 20 analyses per second, until the user presses Stop. | analyser, app_ui |
-| R2 | WHILE the user makes a voiced sound, THE SYSTEM SHALL show the fundamental frequency in Hz, the nearest note with its octave, and how many cents sharp or flat of that note it is; WHILE the input is silent or unvoiced, it SHALL show that no pitch is detected. | analyser, app_controller, notes, pitch |
-| R3 | THE SYSTEM SHALL show a scrolling trace of the pitch over the last 8 seconds on a grid of musical notes, as singing trainers do. | app_ui, pitch_trace_view |
-| R4 | THE SYSTEM SHALL show a live scrolling spectrogram (time across, frequency up a logarithmic axis from 50 Hz to 8 kHz, level as colour). | app_ui, signal_basics, spectrogram_view |
-| R5 | THE SYSTEM SHALL show the input level in dBFS. | app_controller, app_ui, signal_basics |
-| R6 | WHILE the input is voiced, THE SYSTEM SHALL estimate the first two formants (F1, F2) and plot them on a vowel chart against reference English vowels, naming the nearest one, as accent trainers do. | analyser, app_ui, formants, vowel_chart |
-| R7 | WHEN the input has been voiced for at least half a second, THE SYSTEM SHALL report voice-quality measures: jitter, shimmer and harmonics-to-noise ratio. | analyser, app_controller, voice_quality |
-| R8 | WHEN a sustained pitch oscillates at 3 to 9 Hz, THE SYSTEM SHALL report the vibrato rate in Hz and its extent in cents. | analyser, app_controller, vibrato |
-| R9 | WHEN the user presses Stop, THE SYSTEM SHALL show a session summary: lowest, highest and typical pitch as notes, the range in semitones, the share of voiced time within 25 cents of a note, and plain-language feedback sentences. | app_ui, session_summary |
-| R10 | THE SYSTEM SHALL explain every measure it displays in plain language, next to the measure, for someone with no audio or music-theory background. | app_controller, app_ui, session_summary |
-| R11 | IF microphone access is denied or unavailable, THEN THE SYSTEM SHALL say what went wrong and how to fix it, and let the user press Start again. | app_controller, app_ui |
-| R12 | THE SYSTEM SHALL run in a desktop browser after `npm install` and `npm run dev`, with a single Start/Stop button as the only control needed to begin. | app_ui |
+[[requirement]]
+id = "R4"
+text = "THE SYSTEM SHALL show a live scrolling spectrogram (time across, frequency up a logarithmic axis from 50 Hz to 8 kHz, level as colour)."
+request = "r-20260927-01"
 
-## Items
+[[requirement]]
+id = "R5"
+text = "THE SYSTEM SHALL show the input level in dBFS."
+request = "r-20260927-01"
 
-### signal_basics — Test-signal synthesis, FFT spectrum and level meter maths  `[feature]`
+[[requirement]]
+id = "R6"
+text = "WHILE the input is voiced, THE SYSTEM SHALL estimate the first two formants (F1, F2) and plot them on a vowel chart against reference English vowels, naming the nearest one, as accent trainers do."
+request = "r-20260927-01"
 
-satisfies: R4, R5 · depends: — · files: `src/testing/synth.ts`, `src/testing/synth.test.ts`, `src/dsp/fft.ts`, `src/dsp/fft.test.ts`, `src/dsp/level.ts`, `src/dsp/level.test.ts` · lang: typescript
+[[requirement]]
+id = "R7"
+text = "WHEN the input has been voiced for at least half a second, THE SYSTEM SHALL report voice-quality measures: jitter, shimmer and harmonics-to-noise ratio."
+request = "r-20260927-01"
 
-**Description.** Three modules. See architecture.md for conventions.
+[[requirement]]
+id = "R8"
+text = "WHEN a sustained pitch oscillates at 3 to 9 Hz, THE SYSTEM SHALL report the vibrato rate in Hz and its extent in cents."
+request = "r-20260927-01"
+
+[[requirement]]
+id = "R9"
+text = "WHEN the user presses Stop, THE SYSTEM SHALL show a session summary: lowest, highest and typical pitch as notes, the range in semitones, the share of voiced time within 25 cents of a note, and plain-language feedback sentences."
+request = "r-20260927-01"
+
+[[requirement]]
+id = "R10"
+text = "THE SYSTEM SHALL explain every measure it displays in plain language, next to the measure, for someone with no audio or music-theory background."
+request = "r-20260927-01"
+
+[[requirement]]
+id = "R11"
+text = "IF microphone access is denied or unavailable, THEN THE SYSTEM SHALL say what went wrong and how to fix it, and let the user press Start again."
+request = "r-20260927-01"
+
+[[requirement]]
+id = "R12"
+text = "THE SYSTEM SHALL run in a desktop browser after `npm install` and `npm run dev`, with a single Start/Stop button as the only control needed to begin."
+request = "r-20260927-01"
+
+[[item]]
+id = "signal_basics"
+title = "Test-signal synthesis, FFT spectrum and level meter maths"
+description = """
+Three modules. See architecture.md for conventions.
 
 src/testing/synth.ts: deterministic signal generators. Every function returns a
 new Float32Array.
@@ -78,18 +122,32 @@ seed, and stays within bounds; harmonicTone's peak equals `amplitude`; pulseTrai
 length and pulse peak positions; vibratoTone's zero-crossing rate over 1 s is
 within 1% of hz; the magnitude spectrum of resonate() applied to a single-sample
 impulse has a local maximum within 3% of each formant frequency.
+"""
+satisfies = [
+    "R4",
+    "R5",
+]
+files = [
+    "src/testing/synth.ts",
+    "src/testing/synth.test.ts",
+    "src/dsp/fft.ts",
+    "src/dsp/fft.test.ts",
+    "src/dsp/level.ts",
+    "src/dsp/level.test.ts",
+]
+lang = "typescript"
 
-### notes — Convert between frequency, MIDI note numbers, note names and cents  `[feature]`
-
-satisfies: R2 · depends: — · files: `src/music/notes.ts`, `src/music/notes.test.ts` · lang: typescript
-
-**Description.** src/music/notes.ts (see NoteInfo in architecture.md):
+[[item]]
+id = "notes"
+title = "Convert between frequency, MIDI note numbers, note names and cents"
+description = """
+src/music/notes.ts (see NoteInfo in architecture.md):
 - hzToMidi(hz, a4 = A4_HZ): 69 + 12*log2(hz/a4), fractional.
 - midiToHz(midi, a4 = A4_HZ): the inverse.
 - noteName(midi: number): string for an integer MIDI number, sharps only, in
-  scientific pitch notation: 60 -> "C4", 61 -> "C#4", 69 -> "A4", 21 -> "A0".
+  scientific pitch notation: 60 -> \"C4\", 61 -> \"C#4\", 69 -> \"A4\", 21 -> \"A0\".
 - hzToNote(hz, a4 = A4_HZ): NoteInfo. midi is the nearest integer MIDI number,
-  name is the note name without octave ("C#"), octave is its octave, and cents is
+  name is the note name without octave (\"C#\"), octave is its octave, and cents is
   100 * (fractional MIDI - midi), always in [-50, 50): a pitch exactly 50 cents
   above a note belongs to the next note at -50.
 - hzToMidi and hzToNote throw RangeError when hz is not a finite number above 0.
@@ -97,12 +155,21 @@ satisfies: R2 · depends: — · files: `src/music/notes.ts`, `src/music/notes.t
 Tests: 440 Hz -> A4, 0 cents; 261.63 -> C4 within 0.1 cents of 0; 466.16 -> A#4;
 445 -> A4 +19.56 +/- 0.1 cents; 27.5 -> A0; a4 = 442 makes 442 Hz exactly A4;
 the 50-cent boundary; midiToHz(hzToMidi(x)) round-trips; RangeError for 0, -1, NaN.
+"""
+satisfies = [
+    "R2",
+]
+files = [
+    "src/music/notes.ts",
+    "src/music/notes.test.ts",
+]
+lang = "typescript"
 
-### pitch — Detect the fundamental frequency of a frame with YIN  `[feature]`
-
-satisfies: R2 · depends: signal_basics · files: `src/dsp/pitch.ts`, `src/dsp/pitch.test.ts` · lang: typescript
-
-**Description.** src/dsp/pitch.ts: detectPitch(frame: Float32Array, sampleRate: number,
+[[item]]
+id = "pitch"
+title = "Detect the fundamental frequency of a frame with YIN"
+description = """
+src/dsp/pitch.ts: detectPitch(frame: Float32Array, sampleRate: number,
 options?: { minHz?: number; maxHz?: number; threshold?: number }): PitchResult | null.
 Defaults: minHz = PITCH_MIN_HZ, maxHz = PITCH_MAX_HZ, threshold = 0.15.
 
@@ -126,18 +193,27 @@ all zeros -> null; a 220 Hz sine scaled to -70 dBFS -> null; whiteNoise at
 amplitude 0.5 with seeds 1 to 10 -> null for at least 9 of the 10; a 1000 Hz sine
 with maxHz = 500 never returns a value above 500; a 1000-sample frame with the
 default minHz throws RangeError; the speed bound above.
+"""
+satisfies = [
+    "R2",
+]
+depends = [
+    "signal_basics",
+]
+files = [
+    "src/dsp/pitch.ts",
+    "src/dsp/pitch.test.ts",
+]
+lang = "typescript"
+decision = "YIN (de Cheveigné and Kawahara, 2002) with parabolic interpolation."
+rationale = "Plain autocorrelation makes octave errors on voices with strong harmonics; YIN's cumulative-mean-normalised difference avoids most of them at the same cost, and is what most tuner and singing apps use."
+alternatives = "Autocorrelation (octave errors); McLeod's MPM (comparable, less widely documented); a neural pitch tracker (out of scope: no ML)."
 
-**Decision.** YIN (de Cheveigné and Kawahara, 2002) with parabolic interpolation.
-
-**Rationale.** Plain autocorrelation makes octave errors on voices with strong harmonics; YIN's cumulative-mean-normalised difference avoids most of them at the same cost, and is what most tuner and singing apps use.
-
-**Alternatives.** Autocorrelation (octave errors); McLeod's MPM (comparable, less widely documented); a neural pitch tracker (out of scope: no ML).
-
-### formants — Estimate formant frequencies with linear prediction (LPC)  `[feature]`
-
-satisfies: R6 · depends: signal_basics · files: `src/dsp/formants.ts`, `src/dsp/formants.test.ts` · lang: typescript
-
-**Description.** src/dsp/formants.ts: estimateFormants(frame: Float32Array, sampleRate: number,
+[[item]]
+id = "formants"
+title = "Estimate formant frequencies with linear prediction (LPC)"
+description = """
+src/dsp/formants.ts: estimateFormants(frame: Float32Array, sampleRate: number,
 options?: { maxFormantHz?: number; order?: number; maxFormants?: number }): Formant[].
 Defaults: maxFormantHz = 5500, order = 10, maxFormants = 4.
 
@@ -160,18 +236,27 @@ formants must each be within 12% or 40 Hz (whichever is larger) of the true
 value for: [ɑ] F1 730, F2 1090; [i] F1 270, F2 2290; [u] F1 300, F2 870;
 [æ] F1 660, F2 1720. At f0 = 220 Hz, [ɑ] with F1 850, F2 1220 must be within 15%.
 Silence -> []. Every returned formant has hz ascending and bandwidthHz < 400.
+"""
+satisfies = [
+    "R6",
+]
+depends = [
+    "signal_basics",
+]
+files = [
+    "src/dsp/formants.ts",
+    "src/dsp/formants.test.ts",
+]
+lang = "typescript"
+decision = "Autocorrelation LPC after resampling to 2 x maxFormantHz, formants from the polynomial roots, as Praat does."
+rationale = "LPC is the standard formant method and needs no training data; resampling first keeps the model order small and the estimate stable."
+alternatives = "Cepstral peak picking (less accurate on high voices); a learned model (out of scope)."
 
-**Decision.** Autocorrelation LPC after resampling to 2 x maxFormantHz, formants from the polynomial roots, as Praat does.
-
-**Rationale.** LPC is the standard formant method and needs no training data; resampling first keeps the model order small and the estimate stable.
-
-**Alternatives.** Cepstral peak picking (less accurate on high voices); a learned model (out of scope).
-
-### voice_quality — Measure jitter, shimmer and harmonics-to-noise ratio  `[feature]`
-
-satisfies: R7 · depends: signal_basics · files: `src/dsp/voiceQuality.ts`, `src/dsp/voiceQuality.test.ts` · lang: typescript
-
-**Description.** src/dsp/voiceQuality.ts: measureVoiceQuality(samples: Float32Array,
+[[item]]
+id = "voice_quality"
+title = "Measure jitter, shimmer and harmonics-to-noise ratio"
+description = """
+src/dsp/voiceQuality.ts: measureVoiceQuality(samples: Float32Array,
 sampleRate: number, f0Hz: number): VoiceQuality | null.
 
 - Cycle marks: one per cycle at the largest absolute sample, searched for within
@@ -179,8 +264,8 @@ sampleRate: number, f0Hz: number): VoiceQuality | null.
   around where the next cycle is expected), refined to a sub-sample position by
   parabolic interpolation. Periods T_i are the differences between consecutive
   marks; amplitudes A_i are the absolute peak values at the marks.
-- jitterPercent = 100 * mean(|T_i - T_{i+1}|) / mean(T)   (Praat "jitter (local)").
-- shimmerPercent = 100 * mean(|A_i - A_{i+1}|) / mean(A)  (Praat "shimmer (local)").
+- jitterPercent = 100 * mean(|T_i - T_{i+1}|) / mean(T)   (Praat \"jitter (local)\").
+- shimmerPercent = 100 * mean(|A_i - A_{i+1}|) / mean(A)  (Praat \"shimmer (local)\").
 - hnrDb = 10 * log10(r / (1 - r)), where r is the largest normalised
   autocorrelation over lags within +/-10% of sampleRate / f0Hz, clamped to
   [0.0001, 0.9999].
@@ -197,18 +282,27 @@ Tests, 48 kHz, signals from src/testing/synth.ts:
 - 5 periods -> null; all zeros -> null; f0Hz = 30 -> null.
 Use the unfiltered pulse train for jitter and shimmer (a resonator's ringing
 blurs cycle peaks).
+"""
+satisfies = [
+    "R7",
+]
+depends = [
+    "signal_basics",
+]
+files = [
+    "src/dsp/voiceQuality.ts",
+    "src/dsp/voiceQuality.test.ts",
+]
+lang = "typescript"
+decision = "Praat's local jitter and local shimmer from cycle-by-cycle peak marks; HNR from the normalised autocorrelation at the period lag."
+rationale = "These are the measures voice-training and speech-therapy apps report, and Praat's definitions are the reference that published norms use."
+alternatives = "Cepstral peak prominence (a better single score for breathiness, harder to explain to a beginner)."
 
-**Decision.** Praat's local jitter and local shimmer from cycle-by-cycle peak marks; HNR from the normalised autocorrelation at the period lag.
-
-**Rationale.** These are the measures voice-training and speech-therapy apps report, and Praat's definitions are the reference that published norms use.
-
-**Alternatives.** Cepstral peak prominence (a better single score for breathiness, harder to explain to a beginner).
-
-### vibrato — Detect vibrato rate and extent from a pitch track  `[feature]`
-
-satisfies: R8 · depends: — · files: `src/analysis/vibrato.ts`, `src/analysis/vibrato.test.ts` · lang: typescript
-
-**Description.** src/analysis/vibrato.ts (see PitchPoint and Vibrato in architecture.md):
+[[item]]
+id = "vibrato"
+title = "Detect vibrato rate and extent from a pitch track"
+description = """
+src/analysis/vibrato.ts (see PitchPoint and Vibrato in architecture.md):
 detectVibrato(track: PitchPoint[], options?: { minRateHz?: number;
 maxRateHz?: number; minExtentCents?: number }): Vibrato | null.
 Defaults: minRateHz = 3, maxRateHz = 9, minExtentCents = 10.
@@ -228,14 +322,23 @@ and extent 50 +/- 5; the same plus a drift of +100 cents per second -> rate
 5.5 +/- 0.3 and extent 50 +/- 7; a flat track -> null; 20 cents at 1 Hz -> null
 (too slow); 5 cents at 6 Hz -> null (too small); 0.8 s of good vibrato -> null;
 a 0.3 s gap in the middle of 3 s of vibrato still gives the right rate.
+"""
+satisfies = [
+    "R8",
+]
+files = [
+    "src/analysis/vibrato.ts",
+    "src/analysis/vibrato.test.ts",
+]
+lang = "typescript"
 
-### vowel_chart — Reference vowels, vowel-chart coordinates and nearest vowel  `[feature]`
-
-satisfies: R6 · depends: — · files: `src/views/vowelChart.ts`, `src/views/vowelChart.test.ts` · lang: typescript
-
-**Description.** src/views/vowelChart.ts:
+[[item]]
+id = "vowel_chart"
+title = "Reference vowels, vowel-chart coordinates and nearest vowel"
+description = """
+src/views/vowelChart.ts:
 - interface ReferenceVowel { symbol: string; example: string; f1: number; f2: number }
-- REFERENCE_VOWELS: Record<"men" | "women", ReferenceVowel[]>, exactly these values
+- REFERENCE_VOWELS: Record<\"men\" | \"women\", ReferenceVowel[]>, exactly these values
   (symbol, example word, F1, F2):
   men:   i heed 270 2290; ɪ hid 390 1990; ɛ head 530 1840; æ had 660 1720;
          ɑ hod 730 1090; ɔ hawed 570 840; ʊ hood 440 1020; u who'd 300 870;
@@ -249,26 +352,32 @@ satisfies: R6 · depends: — · files: `src/views/vowelChart.ts`, `src/views/vo
   BOTTOM. x = width * (bark(3000) - bark(f2)) / (bark(3000) - bark(500));
   y = height * (bark(f1) - bark(200)) / (bark(1000) - bark(200)); both clamped to
   [0, width] and [0, height].
-- nearestVowel(f1, f2, set: "men" | "women"): { vowel: ReferenceVowel; distanceBark: number },
+- nearestVowel(f1, f2, set: \"men\" | \"women\"): { vowel: ReferenceVowel; distanceBark: number },
   Euclidean distance on (bark(f1), bark(f2)).
-- referenceSetFor(medianF0Hz: number): "men" below 165 Hz, else "women".
+- referenceSetFor(medianF0Hz: number): \"men\" below 165 Hz, else \"women\".
 
 Tests: each reference vowel is its own nearest with distance 0; (700, 1100) ->
 ɑ in the men's set; [i] is left of and above [ɑ]; [u] is right of [i] at a
 similar height; clamping at the edges; hzToBark(1000) is 8.5 +/- 0.1;
-referenceSetFor(120) = "men", referenceSetFor(210) = "women".
+referenceSetFor(120) = \"men\", referenceSetFor(210) = \"women\".
+"""
+satisfies = [
+    "R6",
+]
+files = [
+    "src/views/vowelChart.ts",
+    "src/views/vowelChart.test.ts",
+]
+lang = "typescript"
+decision = "Peterson and Barney (1952) average F1/F2 for American English monophthongs, men's and women's sets, compared on the Bark scale."
+rationale = "The most widely cited reference table, so the chart matches what accent-training material shows; Bark distances weigh F1 and F2 differences as a listener hears them."
+alternatives = "Hillenbrand et al. (1995) values (more recent, less familiar); speaker normalisation (needs calibration, deferred)."
 
-**Decision.** Peterson and Barney (1952) average F1/F2 for American English monophthongs, men's and women's sets, compared on the Bark scale.
-
-**Rationale.** The most widely cited reference table, so the chart matches what accent-training material shows; Bark distances weigh F1 and F2 differences as a listener hears them.
-
-**Alternatives.** Hillenbrand et al. (1995) values (more recent, less familiar); speaker normalisation (needs calibration, deferred).
-
-### spectrogram_view — Scrolling spectrogram image model with a log frequency axis  `[feature]`
-
-satisfies: R4 · depends: signal_basics · files: `src/views/spectrogram.ts`, `src/views/spectrogram.test.ts` · lang: typescript
-
-**Description.** src/views/spectrogram.ts: class SpectrogramModel.
+[[item]]
+id = "spectrogram_view"
+title = "Scrolling spectrogram image model with a log frequency axis"
+description = """
+src/views/spectrogram.ts: class SpectrogramModel.
 - constructor(options: { width: number; height: number; sampleRate: number;
   frameSize: number; minHz?: number; maxHz?: number; minDb?: number; maxDb?: number }).
   Defaults: minHz 50, maxHz 8000, minDb -100, maxDb -20.
@@ -291,12 +400,24 @@ luminance increases across 11 evenly spaced dB values; after pushing the
 magnitudeSpectrumDb of a 1 kHz sine (2048 samples, 48 kHz), the brightest pixel in
 the last column is within 2 rows of rowForHz(1000); after a second push, that
 column has moved one pixel left.
+"""
+satisfies = [
+    "R4",
+]
+depends = [
+    "signal_basics",
+]
+files = [
+    "src/views/spectrogram.ts",
+    "src/views/spectrogram.test.ts",
+]
+lang = "typescript"
 
-### pitch_trace_view — Scrolling pitch-trace model on a semitone grid  `[feature]`
-
-satisfies: R3 · depends: notes · files: `src/views/pitchTrace.ts`, `src/views/pitchTrace.test.ts` · lang: typescript
-
-**Description.** src/views/pitchTrace.ts: class PitchTraceModel.
+[[item]]
+id = "pitch_trace_view"
+title = "Scrolling pitch-trace model on a semitone grid"
+description = """
+src/views/pitchTrace.ts: class PitchTraceModel.
 - constructor(options: { width: number; height: number; windowSec?: number;
   minMidi?: number; maxMidi?: number }). Defaults: windowSec 8, minMidi 40 (E2),
   maxMidi 84 (C6).
@@ -309,18 +430,30 @@ satisfies: R3 · depends: notes · files: `src/views/pitchTrace.ts`, `src/views/
   segment; an unvoiced point, or a gap of more than 0.1 s, starts a new one.
   Single-point segments are kept (drawn as dots). Uses hzToMidi from src/music/notes.ts.
 - gridLines(): { y: number; midi: number; label: string; isC: boolean }[], one per
-  integer MIDI number from minMidi to maxMidi, label from noteName (e.g. "C4").
+  integer MIDI number from minMidi to maxMidi, label from noteName (e.g. \"C4\").
 
 Tests: x and y mapping at the ends; a 3-point voiced run gives one segment of 3
 points; voiced, null, voiced gives two segments; a 0.2 s gap splits; points older
 than the window are dropped; gridLines has maxMidi - minMidi + 1 entries and
 marks exactly the C notes; 440 Hz maps to yForMidi(69).
+"""
+satisfies = [
+    "R3",
+]
+depends = [
+    "notes",
+]
+files = [
+    "src/views/pitchTrace.ts",
+    "src/views/pitchTrace.test.ts",
+]
+lang = "typescript"
 
-### analyser — Frame assembly and the per-frame analyser that runs every measure  `[feature]`
-
-satisfies: R1, R2, R6, R7, R8 · depends: signal_basics, notes, pitch, formants, voice_quality, vibrato · files: `src/analysis/frames.ts`, `src/analysis/frames.test.ts`, `src/analysis/analyser.ts`, `src/analysis/analyser.test.ts` · lang: typescript
-
-**Description.** src/analysis/frames.ts: class FrameAssembler.
+[[item]]
+id = "analyser"
+title = "Frame assembly and the per-frame analyser that runs every measure"
+description = """
+src/analysis/frames.ts: class FrameAssembler.
 - constructor(options: { sampleRate: number; frameSize?: number; hopSize?: number;
   historySec?: number }). Defaults FRAME_SIZE, HOP_SIZE, historySec 3.
 - push(chunk: Float32Array): Float32Array[]. Returns, in order, every complete
@@ -348,17 +481,40 @@ Tests (48 kHz, audio fed through FrameAssembler in 128-sample chunks, as the
 browser delivers it): 5000 samples yield floor((5000 - 2048) / 512) + 1 = 6 frames,
 frame k starting at sample k*512 (use a ramp signal to check); history(0.01) has
 480 samples; 1.5 s of harmonicTone at 220 Hz gives pitch within 1% of 220 and
-note "A" octave 3 on every frame, and a non-null voiceQuality with jitter < 1 by
+note \"A\" octave 3 on every frame, and a non-null voiceQuality with jitter < 1 by
 the end; 2 s of vibratoTone(220, 5.5 Hz, 50 cents) gives a vibrato of 5.5 +/- 0.5 Hz
 and 50 +/- 15 cents by the end; silence gives pitch null and formants []; at 48 kHz
 the analyser produces more than 20 analyses per second of audio (it produces 93.75).
 The whole test file must run in under 10 seconds.
+"""
+satisfies = [
+    "R1",
+    "R2",
+    "R6",
+    "R7",
+    "R8",
+]
+depends = [
+    "signal_basics",
+    "notes",
+    "pitch",
+    "formants",
+    "voice_quality",
+    "vibrato",
+]
+files = [
+    "src/analysis/frames.ts",
+    "src/analysis/frames.test.ts",
+    "src/analysis/analyser.ts",
+    "src/analysis/analyser.test.ts",
+]
+lang = "typescript"
 
-### session_summary — Session statistics and plain-language feedback  `[feature]`
-
-satisfies: R9, R10 · depends: notes, analyser · files: `src/analysis/session.ts`, `src/analysis/session.test.ts` · lang: typescript
-
-**Description.** src/analysis/session.ts:
+[[item]]
+id = "session_summary"
+title = "Session statistics and plain-language feedback"
+description = """
+src/analysis/session.ts:
 - class SessionStats, constructor(frameDurationSec = HOP_SIZE / DEFAULT_SAMPLE_RATE).
   add(a: FrameAnalysis): void. summary(): SessionSummary.
 - interface SessionSummary { totalSec: number; voicedSec: number;
@@ -370,17 +526,17 @@ satisfies: R9, R10 · depends: notes, analyser · files: `src/analysis/session.t
   Each added frame counts frameDurationSec; voiced frames are those with pitch.
   lowestHz and highestHz are the 5th and 95th percentiles of voiced pitch (so a
   single glitch does not set the range); notes use noteName of the nearest MIDI
-  number ("A3"); rangeSemitones is the rounded difference in MIDI between them;
+  number (\"A3\"); rangeSemitones is the rounded difference in MIDI between them;
   inTunePercent is the percentage of voiced frames with |cents| <= 25;
   averageLevelDbfs is over voiced frames; voiceQuality and vibrato are the last
   non-null values seen. Fields are null when nothing was voiced.
 - describeSession(s: SessionSummary): string[]. Three to six plain-English
   sentences, no unexplained jargon:
-  1. how long they were voicing ("You sang or spoke for 12 seconds.");
-  2. the range ("Your pitch went from G2 to D4, a range of 19 semitones.") and the
+  1. how long they were voicing (\"You sang or spoke for 12 seconds.\");
+  2. the range (\"Your pitch went from G2 to D4, a range of 19 semitones.\") and the
      typical note with its frequency;
-  3. tuning ("You were within a quarter of a semitone of a note 62% of the time.
-     Trained singers usually manage 80% or more.");
+  3. tuning (\"You were within a quarter of a semitone of a note 62% of the time.
+     Trained singers usually manage 80% or more.\");
   4. when voice quality is known: steady or unsteady by jitter under or over 1.04%,
      even or uneven loudness by shimmer under or over 3.81%, clear or breathy by
      HNR over or under 20 dB (Praat's usual reference thresholds), each in words;
@@ -393,28 +549,42 @@ Tests build FrameAnalysis objects directly (no audio): 100 frames at 220 Hz and 
 at 440 Hz -> lowestNote A3, highestNote A4, rangeSemitones 12; one outlier frame at
 1000 Hz among 200 does not change highestNote; half the voiced frames 40 cents off
 -> inTunePercent 50; empty -> summary fields null and describeSession returns one
-sentence containing "microphone"; the jitter wording flips at 1.04%; no sentence
-contains "NaN", "undefined" or "null".
+sentence containing \"microphone\"; the jitter wording flips at 1.04%; no sentence
+contains \"NaN\", \"undefined\" or \"null\".
+"""
+satisfies = [
+    "R9",
+    "R10",
+]
+depends = [
+    "notes",
+    "analyser",
+]
+files = [
+    "src/analysis/session.ts",
+    "src/analysis/session.test.ts",
+]
+lang = "typescript"
 
-### app_controller — Start/Stop controller, microphone errors, and the metric catalogue  `[feature]`
-
-satisfies: R2, R5, R7, R8, R10, R11 · depends: notes, analyser · files: `src/app/controller.ts`, `src/app/controller.test.ts`, `src/app/metrics.ts`, `src/app/metrics.test.ts` · lang: typescript
-
-**Description.** src/app/controller.ts: createController(deps: { startAudio: () => Promise<{ stop(): void }>;
+[[item]]
+id = "app_controller"
+title = "Start/Stop controller, microphone errors, and the metric catalogue"
+description = """
+src/app/controller.ts: createController(deps: { startAudio: () => Promise<{ stop(): void }>;
 onChange?: (state: ControllerState) => void }): Controller.
-- type ControllerState = { status: "idle" | "starting" | "running" | "error";
+- type ControllerState = { status: \"idle\" | \"starting\" | \"running\" | \"error\";
   errorMessage: string | null }.
 - Controller: { readonly state: ControllerState; start(): Promise<void>; stop(): void }.
-- start() from idle or error: status "starting", then "running" when startAudio
-  resolves; if it rejects, status "error" with a message chosen by the error's name:
-  NotAllowedError or SecurityError: "Microphone access was blocked. Click the
-  microphone icon in the address bar, allow access, then press Start again.";
-  NotFoundError or OverconstrainedError: "No microphone was found. Plug one in or
-  check your sound settings, then press Start again.";
-  NotReadableError: "The microphone is being used by another app. Close it, then
-  press Start again.";
-  anything else: "This browser could not start recording. Use a recent Chrome,
-  Edge, Firefox or Safari, opened at http://localhost or over https."
+- start() from idle or error: status \"starting\", then \"running\" when startAudio
+  resolves; if it rejects, status \"error\" with a message chosen by the error's name:
+  NotAllowedError or SecurityError: \"Microphone access was blocked. Click the
+  microphone icon in the address bar, allow access, then press Start again.\";
+  NotFoundError or OverconstrainedError: \"No microphone was found. Plug one in or
+  check your sound settings, then press Start again.\";
+  NotReadableError: \"The microphone is being used by another app. Close it, then
+  press Start again.\";
+  anything else: \"This browser could not start recording. Use a recent Chrome,
+  Edge, Firefox or Safari, opened at http://localhost or over https.\"
 - start() while starting or running does nothing. stop() while running calls the
   audio handle's stop() and returns to idle; otherwise it does nothing.
 - onChange is called on every status change, with the new state.
@@ -425,28 +595,48 @@ src/app/metrics.ts:
   pitchTrace, spectrogram, formants, vowel, jitter, shimmer, hnr, vibratoRate,
   vibratoExtent. Each explanation is one or two plain sentences (at most 220
   characters) saying what it means for the user's voice, e.g. for cents:
-  "How far you are from the nearest note. 100 cents is one semitone; within
-  plus or minus 10 sounds in tune to most listeners."
+  \"How far you are from the nearest note. 100 cents is one semitone; within
+  plus or minus 10 sounds in tune to most listeners.\"
 - formatReadouts(a: FrameAnalysis | null): { id; label; value: string; explanation }[]
-  for the numeric metrics (pitch "220.0 Hz", note "A3", cents "+3 ¢" or "-12 ¢",
-  level "-18 dBFS" rounded to whole dB, formants "F1 730 Hz · F2 1090 Hz", jitter
-  "0.42 %", shimmer "2.1 %", hnr "21 dB", vibratoRate "5.5 Hz", vibratoExtent
-  "48 ¢"), with the value "—" when unavailable (a null analysis gives "—" for all).
+  for the numeric metrics (pitch \"220.0 Hz\", note \"A3\", cents \"+3 ¢\" or \"-12 ¢\",
+  level \"-18 dBFS\" rounded to whole dB, formants \"F1 730 Hz · F2 1090 Hz\", jitter
+  \"0.42 %\", shimmer \"2.1 %\", hnr \"21 dB\", vibratoRate \"5.5 Hz\", vibratoExtent
+  \"48 ¢\"), with the value \"—\" when unavailable (a null analysis gives \"—\" for all).
 
 Tests: the state sequence idle -> starting -> running -> idle with a fake
 startAudio, and that stop() reaches the handle; each error name gives its
 message and a later start() can succeed; a second start() while starting calls
 startAudio once; METRICS ids are unique and complete, every explanation is
 non-empty and at most 220 characters; formatReadouts formats a sample
-FrameAnalysis exactly as above and gives "—" throughout for null.
+FrameAnalysis exactly as above and gives \"—\" throughout for null.
+"""
+satisfies = [
+    "R2",
+    "R5",
+    "R7",
+    "R8",
+    "R10",
+    "R11",
+]
+depends = [
+    "notes",
+    "analyser",
+]
+files = [
+    "src/app/controller.ts",
+    "src/app/controller.test.ts",
+    "src/app/metrics.ts",
+    "src/app/metrics.test.ts",
+]
+lang = "typescript"
 
-### app_ui — The page: microphone capture, panels, painters and the render loop  `[feature]`
-
-satisfies: R1, R3, R4, R5, R6, R9, R10, R11, R12 · depends: app_controller, session_summary, spectrogram_view, pitch_trace_view, vowel_chart · files: `src/app/render.ts`, `src/app/render.test.ts`, `src/app/audio.ts`, `src/main.ts`, `src/style.css`, `index.html` · lang: typescript
-
-**Description.** src/app/render.ts (pure: builds HTML strings and paints onto a context passed in;
+[[item]]
+id = "app_ui"
+title = "The page: microphone capture, panels, painters and the render loop"
+description = """
+src/app/render.ts (pure: builds HTML strings and paints onto a context passed in;
 tests use a fake context that records calls):
-- renderReadoutsHtml(readouts): one element per readout with data-metric="<id>",
+- renderReadoutsHtml(readouts): one element per readout with data-metric=\"<id>\",
   its label, its value, and its explanation visible in a <details> element next
   to it (and as a title attribute). All text is HTML-escaped.
 - renderSummaryHtml(sentences: string[]) and renderErrorHtml(message: string),
@@ -479,21 +669,38 @@ referenceSetFor(median pitch so far). On Stop, show renderSummaryHtml(
 describeSession(stats.summary())). On error, show renderErrorHtml with Start
 enabled. Canvases scale with devicePixelRatio. No new npm dependencies.
 
-Tests (render.ts only): escaping of "<script>"; every readout's explanation
+Tests (render.ts only): escaping of \"<script>\"; every readout's explanation
 appears; paintSpectrogram calls putImageData once with the model's width and
 height; paintPitchTrace draws one path per segment and labels each C grid line;
 paintVowelChart writes all ten vowel symbols; renderErrorHtml includes the message.
-
-**Decision.** AudioWorklet capture into the FrameAssembler, not polling an AnalyserNode.
-
-**Rationale.** Voice quality and vibrato need contiguous audio; an AnalyserNode polled at the display rate gives overlapping, gapped snapshots.
-
-**Alternatives.** AnalyserNode.getFloatTimeDomainData on requestAnimationFrame (simpler, but gaps); ScriptProcessorNode (deprecated).
-
-## Order
-
-1. notes, signal_basics, vibrato, vowel_chart
-2. formants, pitch, pitch_trace_view, spectrogram_view, voice_quality
-3. analyser
-4. app_controller, session_summary
-5. app_ui
+"""
+satisfies = [
+    "R1",
+    "R3",
+    "R4",
+    "R5",
+    "R6",
+    "R9",
+    "R10",
+    "R11",
+    "R12",
+]
+depends = [
+    "app_controller",
+    "session_summary",
+    "spectrogram_view",
+    "pitch_trace_view",
+    "vowel_chart",
+]
+files = [
+    "src/app/render.ts",
+    "src/app/render.test.ts",
+    "src/app/audio.ts",
+    "src/main.ts",
+    "src/style.css",
+    "index.html",
+]
+lang = "typescript"
+decision = "AudioWorklet capture into the FrameAssembler, not polling an AnalyserNode."
+rationale = "Voice quality and vibrato need contiguous audio; an AnalyserNode polled at the display rate gives overlapping, gapped snapshots."
+alternatives = "AnalyserNode.getFloatTimeDomainData on requestAnimationFrame (simpler, but gaps); ScriptProcessorNode (deprecated)."
