@@ -52,7 +52,12 @@ export const REFERENCE_VOWELS: Record<'men' | 'women', ReferenceVowel[]> = {
  * @throws RangeError if hz is not a positive finite number
  */
 export function hzToBark(hz: number): number {
-  throw new Error('not implemented');
+  if (typeof hz !== 'number' || !Number.isFinite(hz) || hz <= 0) {
+    throw new RangeError('hz must be a positive finite number');
+  }
+  // Zwicker's formula for Bark scale conversion
+  // 13 * atan(0.00076 * hz) + 3.5 * atan((hz / 7500) ** 2)
+  return 13 * Math.atan(0.00076 * hz) + 3.5 * Math.atan(Math.pow(hz / 7500, 2));
 }
 
 /**
@@ -73,7 +78,39 @@ export function chartPosition(
   width: number,
   height: number,
 ): { x: number; y: number } {
-  throw new Error('not implemented');
+  // Validate inputs
+  const isPositiveFinite = (n: number) => typeof n === 'number' && Number.isFinite(n) && n > 0;
+  if (!isPositiveFinite(f1)) {
+    throw new RangeError('f1 must be a positive finite number');
+  }
+  if (!isPositiveFinite(f2)) {
+    throw new RangeError('f2 must be a positive finite number');
+  }
+  if (!isPositiveFinite(width)) {
+    throw new RangeError('width must be a positive finite number');
+  }
+  if (!isPositiveFinite(height)) {
+    throw new RangeError('height must be a positive finite number');
+  }
+
+  // Determine min/max formant values across all reference vowels
+  const allVowels = [...REFERENCE_VOWELS.men, ...REFERENCE_VOWELS.women];
+  const f1Values = allVowels.map(v => v.f1);
+  const f2Values = allVowels.map(v => v.f2);
+  const minF1 = Math.min(...f1Values);
+  const maxF1 = Math.max(...f1Values);
+  const minF2 = Math.min(...f2Values);
+  const maxF2 = Math.max(...f2Values);
+
+  // Normalized coordinates (x: front (high F2) -> left, y: open (high F1) -> bottom)
+  const xNorm = (maxF2 - f2) / (maxF2 - minF2);
+  const yNorm = (f1 - minF1) / (maxF1 - minF1);
+
+  // Clamp to chart bounds and scale
+  const x = Math.max(0, Math.min(width, xNorm * width));
+  const y = Math.max(0, Math.min(height, yNorm * height));
+
+  return { x, y };
 }
 
 /**
@@ -92,7 +129,36 @@ export function nearestVowel(
   f2: number,
   set: 'men' | 'women',
 ): { vowel: ReferenceVowel; distanceBark: number } {
-  throw new Error('not implemented');
+  // Validate inputs
+  const isPositiveFinite = (n: number) => typeof n === 'number' && Number.isFinite(n) && n > 0;
+  if (!isPositiveFinite(f1)) {
+    throw new RangeError('f1 must be a positive finite number');
+  }
+  if (!isPositiveFinite(f2)) {
+    throw new RangeError('f2 must be a positive finite number');
+  }
+  if (set !== 'men' && set !== 'women') {
+    throw new RangeError('set must be "men" or "women"');
+  }
+
+  const candidates = REFERENCE_VOWELS[set];
+  // Compute Bark coordinates of the input point
+  const bF1 = hzToBark(f1);
+  const bF2 = hzToBark(f2);
+
+  let nearest: ReferenceVowel | null = null;
+  let minDist = Infinity;
+  for (const vowel of candidates) {
+    const vB1 = hzToBark(vowel.f1);
+    const vB2 = hzToBark(vowel.f2);
+    const dist = Math.hypot(bF1 - vB1, bF2 - vB2);
+    if (dist < minDist) {
+      minDist = dist;
+      nearest = vowel;
+    }
+  }
+  // At this point nearest must be non-null because candidates non-empty
+  return { vowel: nearest as ReferenceVowel, distanceBark: minDist };
 }
 
 /**
@@ -102,5 +168,8 @@ export function nearestVowel(
  * @throws RangeError if medianF0Hz is not a positive finite number
  */
 export function referenceSetFor(medianF0Hz: number): 'men' | 'women' {
-  throw new Error('not implemented');
+  if (typeof medianF0Hz !== 'number' || !Number.isFinite(medianF0Hz) || medianF0Hz <= 0) {
+    throw new RangeError('medianF0Hz must be a positive finite number');
+  }
+  return medianF0Hz < 165 ? 'men' : 'women';
 }
