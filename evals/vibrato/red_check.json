@@ -2,17 +2,19 @@
   "outcome": "passed",
   "reasons": [],
   "new_tests": {
-    "detectVibrato detects vibrato with correct rate and extent::detectVibrato detects vibrato with correct rate and extent": "red",
-    "detectVibrato detects vibrato with linear drift removed::detectVibrato detects vibrato with linear drift removed": "red",
-    "detectVibrato returns null for a flat track::detectVibrato returns null for a flat track": "red",
-    "detectVibrato returns null for vibrato too slow::detectVibrato returns null for vibrato too slow": "red",
-    "detectVibrato returns null for vibrato too small::detectVibrato returns null for vibrato too small": "red",
-    "detectVibrato returns null for track too short::detectVibrato returns null for track too short": "red",
-    "detectVibrato handles gaps in the track by using the longest contiguous segment::detectVibrato handles gaps in the track by using the longest contiguous segment": "red",
-    "detectVibrato throws RangeError for invalid options::detectVibrato throws RangeError for invalid options": "red"
+    "detectVibrato should detect vibrato with 5.5Hz rate and 50 cents extent::detectVibrato should detect vibrato with 5.5Hz rate and 50 cents extent": "red",
+    "detectVibrato should detect vibrato with drift::detectVibrato should detect vibrato with drift": "red",
+    "detectVibrato should return null for flat track::detectVibrato should return null for flat track": "red",
+    "detectVibrato should return null for vibrato too slow::detectVibrato should return null for vibrato too slow": "red",
+    "detectVibrato should return null for vibrato too small::detectVibrato should return null for vibrato too small": "red",
+    "detectVibrato should return null for track too short::detectVibrato should return null for track too short": "red",
+    "detectVibrato should handle gap in middle of track::detectVibrato should handle gap in middle of track": "red",
+    "detectVibrato should throw for empty track::detectVibrato should throw for empty track": "red",
+    "detectVibrato should respect custom options::detectVibrato should respect custom options": "red"
   },
   "other_failures": [],
   "missing": [],
-  "results_dir": "/home/user/projects/voice-coach/trajectories/20260928T153728Z-84db/red_check_vibrato/20260928153959_red-cb613edf",
+  "vacuous": [],
+  "results_dir": "/home/user/projects/voice-coach/trajectories/20261001T161435Z-751f/red_check_vibrato/20261001162153_red-7e8013e3",
   "expect": "stub"
 }

@@ -9,19 +9,20 @@
   "item": "vibrato",
   "modifies_tests": [],
   "new_tests": [
-    "detects vibrato with correct rate and extent",
-    "detects vibrato with linear drift removed",
-    "handles gaps in the track by using the longest contiguous segment",
-    "returns null for a flat track",
-    "returns null for track too short",
-    "returns null for vibrato too slow",
-    "returns null for vibrato too small",
-    "throws RangeError for invalid options"
+    "should detect vibrato with 5.5Hz rate and 50 cents extent",
+    "should detect vibrato with drift",
+    "should handle gap in middle of track",
+    "should respect custom options",
+    "should return null for flat track",
+    "should return null for track too short",
+    "should return null for vibrato too slow",
+    "should return null for vibrato too small",
+    "should throw for empty track"
   ],
   "profile": "feature",
   "red_check": "passed",
-  "scaffold_commit": "57d891c2f3a60a3d00cd988d99f45bcf146bfa65",
-  "scaffolded_at": "2026-09-28T15:40:19.054005+00:00",
+  "scaffold_commit": "321084a0d34e1bcdbb18c24962697956413d1f1d",
+  "scaffolded_at": "2026-10-01T16:22:15.219050+00:00",
   "scaffolder_model": "openrouter/deepseek/deepseek-v3.2",
   "stub_files": [
     "src/analysis/vibrato.ts"

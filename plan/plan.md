@@ -24,7 +24,7 @@ parent: 1 · author: operator · created: 2026-09-28T19:47:45 · requests: r-202
 
 ## Items
 
-### signal_basics — Test-signal synthesis, FFT spectrum and level meter maths  `[feature]`
+### signal_basics — Test-signal synthesis, FFT spectrum and level meter maths  `[feature]` · scaffolded
 
 satisfies: R4, R5 · depends: — · files: `src/testing/synth.ts`, `src/testing/synth.test.ts`, `src/dsp/fft.ts`, `src/dsp/fft.test.ts`, `src/dsp/level.ts`, `src/dsp/level.test.ts` · lang: typescript
 
@@ -79,7 +79,7 @@ length and pulse peak positions; vibratoTone's zero-crossing rate over 1 s is
 within 1% of hz; the magnitude spectrum of resonate() applied to a single-sample
 impulse has a local maximum within 3% of each formant frequency.
 
-### notes — Convert between frequency, MIDI note numbers, note names and cents  `[feature]`
+### notes — Convert between frequency, MIDI note numbers, note names and cents  `[feature]` · scaffolded
 
 satisfies: R2 · depends: — · files: `src/music/notes.ts`, `src/music/notes.test.ts` · lang: typescript
 
@@ -98,7 +98,7 @@ Tests: 440 Hz -> A4, 0 cents; 261.63 -> C4 within 0.1 cents of 0; 466.16 -> A#4;
 445 -> A4 +19.56 +/- 0.1 cents; 27.5 -> A0; a4 = 442 makes 442 Hz exactly A4;
 the 50-cent boundary; midiToHz(hzToMidi(x)) round-trips; RangeError for 0, -1, NaN.
 
-### pitch — Detect the fundamental frequency of a frame with YIN  `[feature]`
+### pitch — Detect the fundamental frequency of a frame with YIN  `[feature]` · pending
 
 satisfies: R2 · depends: signal_basics · files: `src/dsp/pitch.ts`, `src/dsp/pitch.test.ts` · lang: typescript
 
@@ -133,7 +133,7 @@ default minHz throws RangeError; the speed bound above.
 
 **Alternatives.** Autocorrelation (octave errors); McLeod's MPM (comparable, less widely documented); a neural pitch tracker (out of scope: no ML).
 
-### formants — Estimate formant frequencies with linear prediction (LPC)  `[feature]`
+### formants — Estimate formant frequencies with linear prediction (LPC)  `[feature]` · pending
 
 satisfies: R6 · depends: signal_basics · files: `src/dsp/formants.ts`, `src/dsp/formants.test.ts` · lang: typescript
 
@@ -167,7 +167,7 @@ Silence -> []. Every returned formant has hz ascending and bandwidthHz < 400.
 
 **Alternatives.** Cepstral peak picking (less accurate on high voices); a learned model (out of scope).
 
-### voice_quality — Measure jitter, shimmer and harmonics-to-noise ratio  `[feature]`
+### voice_quality — Measure jitter, shimmer and harmonics-to-noise ratio  `[feature]` · pending
 
 satisfies: R7 · depends: signal_basics · files: `src/dsp/voiceQuality.ts`, `src/dsp/voiceQuality.test.ts` · lang: typescript
 
@@ -204,7 +204,7 @@ blurs cycle peaks).
 
 **Alternatives.** Cepstral peak prominence (a better single score for breathiness, harder to explain to a beginner).
 
-### vibrato — Detect vibrato rate and extent from a pitch track  `[feature]`
+### vibrato — Detect vibrato rate and extent from a pitch track  `[feature]` · scaffolded
 
 satisfies: R8 · depends: — · files: `src/analysis/vibrato.ts`, `src/analysis/vibrato.test.ts` · lang: typescript
 
@@ -229,7 +229,7 @@ and extent 50 +/- 5; the same plus a drift of +100 cents per second -> rate
 (too slow); 5 cents at 6 Hz -> null (too small); 0.8 s of good vibrato -> null;
 a 0.3 s gap in the middle of 3 s of vibrato still gives the right rate.
 
-### vowel_chart — Reference vowels, vowel-chart coordinates and nearest vowel  `[feature]`
+### vowel_chart — Reference vowels, vowel-chart coordinates and nearest vowel  `[feature]` · scaffolded
 
 satisfies: R6 · depends: — · files: `src/views/vowelChart.ts`, `src/views/vowelChart.test.ts` · lang: typescript
 
@@ -264,7 +264,7 @@ referenceSetFor(120) = "men", referenceSetFor(210) = "women".
 
 **Alternatives.** Hillenbrand et al. (1995) values (more recent, less familiar); speaker normalisation (needs calibration, deferred).
 
-### spectrogram_view — Scrolling spectrogram image model with a log frequency axis  `[feature]`
+### spectrogram_view — Scrolling spectrogram image model with a log frequency axis  `[feature]` · pending
 
 satisfies: R4 · depends: signal_basics · files: `src/views/spectrogram.ts`, `src/views/spectrogram.test.ts` · lang: typescript
 
@@ -292,7 +292,7 @@ magnitudeSpectrumDb of a 1 kHz sine (2048 samples, 48 kHz), the brightest pixel 
 the last column is within 2 rows of rowForHz(1000); after a second push, that
 column has moved one pixel left.
 
-### pitch_trace_view — Scrolling pitch-trace model on a semitone grid  `[feature]`
+### pitch_trace_view — Scrolling pitch-trace model on a semitone grid  `[feature]` · scaffolded
 
 satisfies: R3 · depends: notes · files: `src/views/pitchTrace.ts`, `src/views/pitchTrace.test.ts` · lang: typescript
 
@@ -316,7 +316,7 @@ points; voiced, null, voiced gives two segments; a 0.2 s gap splits; points olde
 than the window are dropped; gridLines has maxMidi - minMidi + 1 entries and
 marks exactly the C notes; 440 Hz maps to yForMidi(69).
 
-### analyser — Frame assembly and the per-frame analyser that runs every measure  `[feature]`
+### analyser — Frame assembly and the per-frame analyser that runs every measure  `[feature]` · pending
 
 satisfies: R1, R2, R6, R7, R8 · depends: signal_basics, notes, pitch, formants, voice_quality, vibrato · files: `src/analysis/frames.ts`, `src/analysis/frames.test.ts`, `src/analysis/analyser.ts`, `src/analysis/analyser.test.ts` · lang: typescript
 
@@ -354,7 +354,7 @@ and 50 +/- 15 cents by the end; silence gives pitch null and formants []; at 48 
 the analyser produces more than 20 analyses per second of audio (it produces 93.75).
 The whole test file must run in under 10 seconds.
 
-### session_summary — Session statistics and plain-language feedback  `[feature]`
+### session_summary — Session statistics and plain-language feedback  `[feature]` · pending
 
 satisfies: R9, R10 · depends: notes, analyser · files: `src/analysis/session.ts`, `src/analysis/session.test.ts` · lang: typescript
 
@@ -396,7 +396,7 @@ at 440 Hz -> lowestNote A3, highestNote A4, rangeSemitones 12; one outlier frame
 sentence containing "microphone"; the jitter wording flips at 1.04%; no sentence
 contains "NaN", "undefined" or "null".
 
-### app_controller — Start/Stop controller, microphone errors, and the metric catalogue  `[feature]`
+### app_controller — Start/Stop controller, microphone errors, and the metric catalogue  `[feature]` · pending
 
 satisfies: R2, R5, R7, R8, R10, R11 · depends: notes, analyser · files: `src/app/controller.ts`, `src/app/controller.test.ts`, `src/app/metrics.ts`, `src/app/metrics.test.ts` · lang: typescript
 
@@ -440,7 +440,7 @@ startAudio once; METRICS ids are unique and complete, every explanation is
 non-empty and at most 220 characters; formatReadouts formats a sample
 FrameAnalysis exactly as above and gives "—" throughout for null.
 
-### app_ui — The page: microphone capture, panels, painters and the render loop  `[feature]`
+### app_ui — The page: microphone capture, panels, painters and the render loop  `[feature]` · pending
 
 satisfies: R1, R3, R4, R5, R6, R9, R10, R11, R12 · depends: app_controller, session_summary, spectrogram_view, pitch_trace_view, vowel_chart · files: `src/app/render.ts`, `src/app/render.test.ts`, `src/app/audio.ts`, `src/main.ts`, `src/style.css`, `index.html` · lang: typescript
 

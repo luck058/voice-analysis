@@ -7,12 +7,13 @@ Implement vibrato detection from a pitch track, returning the rate in Hz and ext
 ## Requirements
 
 1. detectVibrato must accept a track of PitchPoint objects in time order and return a Vibrato object with rateHz and extentCents properties, or null
-2. Points with gaps >0.1s must split the track; use the longest contiguous run that spans at least 1.0s and has at least 20 points
-3. Remove a least-squares linear trend from the detrended run before analysis
-4. rateHz must be computed from the dominant periodicity of the detrended run (e.g., via zero crossings or autocorrelation peak after resampling to 100 points per second)
-5. extentCents must be half the mean peak-to-trough excursion of the detrended run
-6. Return null when rateHz is outside [minRateHz, maxRateHz] or extentCents < minExtentCents
-7. Default options: minRateHz = 3, maxRateHz = 9, minExtentCents = 10
+2. The function must handle irregularly spaced points by splitting tracks at gaps > 0.1 seconds and using the longest contiguous run
+3. A valid vibrato run must span at least 1.0 seconds and contain at least 20 points, otherwise return null
+4. Remove linear trend from the pitch points before analysis to isolate oscillation from pitch drift
+5. Calculate rateHz as the dominant periodicity of the detrended run (e.g., via zero crossings or autocorrelation peak after resampling to 100 points per second)
+6. Calculate extentCents as half the mean peak-to-trough excursion of the detrended run
+7. Return null when rateHz is outside [minRateHz, maxRateHz] or extentCents < minExtentCents (defaults: minRateHz=3, maxRateHz=9, minExtentCents=10)
+8. The implementation must pass tests including: 5.5Hz/50cents sine wave, same with linear drift, flat track, too slow (1Hz), too small (5cents), too short (0.8s), and track with gap
 
 ## Files in scope
 
@@ -20,7 +21,7 @@ Implement vibrato detection from a pitch track, returning the rate in Hz and ext
 
 ## Context
 
-This is a new feature with no dependencies. Follow TypeScript conventions: named exports only, explicit types, and throw RangeError for invalid input. PitchPoint interface has timeSec and cents properties. The implementation must be pure (no DOM, no timers, no Math.random).
+This is a new feature with no dependencies. Follow TypeScript conventions: named exports only, explicit types, Float32Array for audio data. Invalid input throws RangeError; 'no answer' returns null. The PitchPoint interface has timeSec and cents properties. The Vibrato interface has rateHz and extentCents properties. Tests will be written separately by a test-writer agent.
 
 ## Rules (written by the harness, true for every task)
 
@@ -33,6 +34,14 @@ This is a new feature with no dependencies. Follow TypeScript conventions: named
 - Run the tests yourself before finishing (commands below). The harness re-runs
   them independently in a fresh container; your own report of the result is not
   what decides whether the task passed.
+- If you are certain a test's expected value is wrong (it contradicts the task's
+  own description or a formula it states), do not edit the test and do not bend
+  the code to fit it. Write `.harness/dispute.json` and finish:
+  `{"test_file": "<path>", "test_name": "<test>", "line": <line>, "quoted": "<the
+  wrong expectation, copied exactly from that line>", "correct": "<what it should
+  be>", "derivation": "<why, from the task's description>"}`. The harness checks
+  the pointer and has the tests rewritten by another model; a dispute never
+  passes the task, and one that does not check out is rejected.
 
 ## How to run the tests
 

@@ -2,16 +2,16 @@
 
 ## Goal
 
-Implement the music theory functions that convert between frequency, MIDI note numbers, note names, and cents. These functions will be used by the pitch detector to display the musical note information for the user's voice pitch.
+Implement the music note conversion functions that convert between frequency, MIDI note numbers, note names, and cents. These functions will be used by the pitch detector to display the musical note information for detected pitches.
 
 ## Requirements
 
-1. hzToMidi(hz, a4) returns fractional MIDI number: 69 + 12*log2(hz/a4)
-2. midiToHz(midi, a4) returns frequency: a4 * 2^((midi - 69)/12)
-3. noteName(midi) returns string in scientific pitch notation with sharps only (e.g., 60 -> 'C4', 61 -> 'C#4', 69 -> 'A4')
-4. hzToNote(hz, a4) returns NoteInfo with nearest integer MIDI, note name without octave, octave number, and cents in [-50, 50)
-5. hzToMidi and hzToNote throw RangeError when hz is not a finite number > 0
-6. midiToHz(hzToMidi(x)) round-trips within floating-point precision
+1. hzToMidi(hz, a4 = A4_HZ) must return fractional MIDI number using formula 69 + 12*log2(hz/a4)
+2. midiToHz(midi, a4 = A4_HZ) must return frequency using the inverse formula a4 * 2^((midi - 69)/12)
+3. noteName(midi: number) must return string in scientific pitch notation with sharps only (e.g., 60 -> 'C4', 61 -> 'C#4', 69 -> 'A4', 21 -> 'A0')
+4. hzToNote(hz, a4 = A4_HZ) must return NoteInfo with nearest integer MIDI, note name without octave, octave number, and cents in range [-50, 50)
+5. hzToMidi and hzToNote must throw RangeError when hz is not a finite number above 0
+6. All functions must handle the 50-cent boundary correctly: a pitch exactly 50 cents above a note belongs to the next note at -50 cents
 
 ## Files in scope
 
@@ -19,7 +19,7 @@ Implement the music theory functions that convert between frequency, MIDI note n
 
 ## Context
 
-Follow TypeScript conventions: named exports only, explicit types. Use ES module syntax (import/export). The config.ts file exists with A4_HZ constant. Invalid input should throw RangeError with a message naming the parameter. 'No answer' cases (like silence) are handled elsewhere as null, not in these functions.
+This is a new feature with no dependencies. Follow TypeScript conventions: named exports only, explicit types, ES module syntax. Use A4_HZ from src/config.ts. The NoteInfo interface is defined in architecture.md: { midi: number; name: string; octave: number; cents: number }. Note names use sharps only, not flats. Cents must be in range [-50, 50).
 
 ## Rules (written by the harness, true for every task)
 
@@ -32,6 +32,14 @@ Follow TypeScript conventions: named exports only, explicit types. Use ES module
 - Run the tests yourself before finishing (commands below). The harness re-runs
   them independently in a fresh container; your own report of the result is not
   what decides whether the task passed.
+- If you are certain a test's expected value is wrong (it contradicts the task's
+  own description or a formula it states), do not edit the test and do not bend
+  the code to fit it. Write `.harness/dispute.json` and finish:
+  `{"test_file": "<path>", "test_name": "<test>", "line": <line>, "quoted": "<the
+  wrong expectation, copied exactly from that line>", "correct": "<what it should
+  be>", "derivation": "<why, from the task's description>"}`. The harness checks
+  the pointer and has the tests rewritten by another model; a dispute never
+  passes the task, and one that does not check out is rejected.
 
 ## How to run the tests
 
