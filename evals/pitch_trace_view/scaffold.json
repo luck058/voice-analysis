@@ -1,0 +1,41 @@
+{
+  "base_commit": "c68f444694e8d49bc9faf12e34efd4b8f8a95e8d",
+  "branch": "harness/item/pitch_trace_view",
+  "files": [
+    "src/views/pitchTrace.ts",
+    "src/views/pitchTrace.test.ts"
+  ],
+  "fingerprint": "e2eadbbaf2c6fd31",
+  "item": "pitch_trace_view",
+  "modifies_tests": [],
+  "new_tests": [
+    "should add a point",
+    "should clamp values above maxMidi",
+    "should clamp values below minMidi",
+    "should discard points older than windowSec",
+    "should have maxMidi - minMidi + 1 entries",
+    "should keep single-point segments",
+    "should map 440 Hz (MIDI 69) correctly",
+    "should map linearly between endpoints",
+    "should map maxMidi to 0",
+    "should map minMidi to height",
+    "should map nowSec - windowSec to 0",
+    "should map nowSec to width",
+    "should mark exactly the C notes",
+    "should return one segment for consecutive voiced points",
+    "should split segments on gaps > 0.1 s",
+    "should split segments on unvoiced points"
+  ],
+  "profile": "feature",
+  "red_check": "passed",
+  "scaffold_commit": "bc09a4278b3b797fce9b49cf17d2b0ed68aad10c",
+  "scaffolded_at": "2026-10-01T18:59:24.441534+00:00",
+  "scaffolder_model": "openrouter/deepseek/deepseek-v3.2",
+  "stub_files": [
+    "src/views/pitchTrace.ts"
+  ],
+  "test_files": [
+    "src/views/pitchTrace.test.ts"
+  ],
+  "test_writer_model": "openrouter/qwen/qwen3-coder"
+}

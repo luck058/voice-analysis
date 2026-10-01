@@ -2,24 +2,22 @@
   "outcome": "passed",
   "reasons": [],
   "new_tests": {
-    "vowelChart REFERENCE_VOWELS contains the correct reference vowels for men::vowelChart REFERENCE_VOWELS contains the correct reference vowels for men": "vacuous",
-    "vowelChart REFERENCE_VOWELS contains the correct reference vowels for women::vowelChart REFERENCE_VOWELS contains the correct reference vowels for women": "vacuous",
-    "vowelChart hzToBark computes the Bark scale correctly::vowelChart hzToBark computes the Bark scale correctly": "red",
-    "vowelChart chartPosition positions front vowels (high F2) on the LEFT::vowelChart chartPosition positions front vowels (high F2) on the LEFT": "red",
-    "vowelChart chartPosition positions open vowels (high F1) at the BOTTOM::vowelChart chartPosition positions open vowels (high F1) at the BOTTOM": "red",
-    "vowelChart chartPosition positions [u] right of [i] at a similar height::vowelChart chartPosition positions [u] right of [i] at a similar height": "red",
-    "vowelChart chartPosition clamps positions at the edges::vowelChart chartPosition clamps positions at the edges": "red",
-    "vowelChart nearestVowel finds each reference vowel as its own nearest with distance 0::vowelChart nearestVowel finds each reference vowel as its own nearest with distance 0": "red",
-    "vowelChart nearestVowel finds \u0251 as the nearest vowel for (700, 1100) in the men's set::vowelChart nearestVowel finds \u0251 as the nearest vowel for (700, 1100) in the men's set": "red",
-    "vowelChart referenceSetFor returns \"men\" for median F0 below 165 Hz::vowelChart referenceSetFor returns \"men\" for median F0 below 165 Hz": "red",
-    "vowelChart referenceSetFor returns \"women\" for median F0 at or above 165 Hz::vowelChart referenceSetFor returns \"women\" for median F0 at or above 165 Hz": "red"
+    "vowelChart hzToBark should compute Bark value for 1000 Hz::vowelChart hzToBark should compute Bark value for 1000 Hz": "red",
+    "vowelChart hzToBark should throw RangeError for non-positive inputs::vowelChart hzToBark should throw RangeError for non-positive inputs": "red",
+    "vowelChart chartPosition should compute correct position for [i] (front, high)::vowelChart chartPosition should compute correct position for [i] (front, high)": "red",
+    "vowelChart chartPosition should compute correct position for [\u0251] (back, low)::vowelChart chartPosition should compute correct position for [\u0251] (back, low)": "red",
+    "vowelChart chartPosition should clamp coordinates to chart bounds::vowelChart chartPosition should clamp coordinates to chart bounds": "red",
+    "vowelChart chartPosition should throw RangeError for invalid inputs::vowelChart chartPosition should throw RangeError for invalid inputs": "red",
+    "vowelChart nearestVowel should identify each reference vowel as its own nearest::vowelChart nearestVowel should identify each reference vowel as its own nearest": "red",
+    "vowelChart nearestVowel should identify [\u0251] as nearest to (700, 1100) in men's set::vowelChart nearestVowel should identify [\u0251] as nearest to (700, 1100) in men's set": "red",
+    "vowelChart nearestVowel should throw RangeError for invalid inputs::vowelChart nearestVowel should throw RangeError for invalid inputs": "red",
+    "vowelChart referenceSetFor should return \"men\" for medianF0Hz < 165 Hz::vowelChart referenceSetFor should return \"men\" for medianF0Hz < 165 Hz": "red",
+    "vowelChart referenceSetFor should return \"women\" for medianF0Hz >= 165 Hz::vowelChart referenceSetFor should return \"women\" for medianF0Hz >= 165 Hz": "red",
+    "vowelChart referenceSetFor should throw RangeError for non-positive inputs::vowelChart referenceSetFor should throw RangeError for non-positive inputs": "red"
   },
   "other_failures": [],
   "missing": [],
-  "vacuous": [
-    "contains the correct reference vowels for men",
-    "contains the correct reference vowels for women"
-  ],
-  "results_dir": "/home/user/projects/voice-coach/trajectories/20260928T160618Z-6cd8/red_check_vowel_chart/20260928160638_red-4e4ac87e",
+  "vacuous": [],
+  "results_dir": "/home/user/projects/voice-coach/trajectories/20261001T161435Z-751f/red_check_vowel_chart/20261001162618_red-d6a076dc",
   "expect": "stub"
 }

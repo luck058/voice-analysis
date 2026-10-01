@@ -1,0 +1,35 @@
+{
+  "base_commit": "94b382dcac6df1f076b7226be8360ec18f627efe",
+  "branch": "harness/item/vowel_chart",
+  "files": [
+    "src/views/vowelChart.ts",
+    "src/views/vowelChart.test.ts"
+  ],
+  "fingerprint": "2a4804c2955c258a",
+  "item": "vowel_chart",
+  "modifies_tests": [],
+  "new_tests": [
+    "should clamp coordinates to chart bounds",
+    "should compute Bark value for 1000 Hz",
+    "should compute correct position for [i] (front, high)",
+    "should compute correct position for [\u0251] (back, low)",
+    "should identify [\u0251] as nearest to (700, 1100) in men's set",
+    "should identify each reference vowel as its own nearest",
+    "should return \"men\" for medianF0Hz < 165 Hz",
+    "should return \"women\" for medianF0Hz >= 165 Hz",
+    "should throw RangeError for invalid inputs",
+    "should throw RangeError for non-positive inputs"
+  ],
+  "profile": "feature",
+  "red_check": "passed",
+  "scaffold_commit": "496bea6f8b074ba6a7b92b79cc74a5936aab702c",
+  "scaffolded_at": "2026-10-01T16:26:44.617915+00:00",
+  "scaffolder_model": "openrouter/deepseek/deepseek-v3.2",
+  "stub_files": [
+    "src/views/vowelChart.ts"
+  ],
+  "test_files": [
+    "src/views/vowelChart.test.ts"
+  ],
+  "test_writer_model": "openrouter/qwen/qwen3-coder"
+}
