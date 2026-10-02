@@ -1,0 +1,36 @@
+{
+  "base_commit": "d0f9e41b2c9e088189a7482208db75a2c1a29e81",
+  "branch": "harness/item/voice_quality",
+  "files": [
+    "src/dsp/voiceQuality.ts",
+    "src/dsp/voiceQuality.test.ts"
+  ],
+  "fingerprint": "fe2028fd90d696cb",
+  "item": "voice_quality",
+  "modifies_tests": [],
+  "new_tests": [
+    "alternating amplitudes (true shimmer 10%) gives shimmer in [8, 12]",
+    "alternating periods (true jitter ~3.75%) gives jitter in [3, 5]",
+    "boundary f0 values within range are measured, not null",
+    "clean constant train: jitter < 0.5, shimmer < 0.5, hnr > 20",
+    "hnr decreases as noise increases: clean > 20 dB > 5 dB",
+    "returns null for fewer than 10 cycles",
+    "returns null for silence (all zeros)",
+    "returns null when f0Hz is out of range",
+    "throws RangeError for invalid sampleRate or empty samples",
+    "very quiet train below SILENCE_DBFS returns null"
+  ],
+  "profile": "feature",
+  "red_check": "passed",
+  "scaffold_commit": "d50acde99731a3589b70c84ef27850f4e67dea3a",
+  "scaffolded_at": "2026-10-02T16:05:37.540628+00:00",
+  "scaffolder_model": "openrouter/deepseek/deepseek-v3.2",
+  "stub_files": [
+    "src/dsp/voiceQuality.ts"
+  ],
+  "test_files": [
+    "src/dsp/voiceQuality.range.test.ts",
+    "src/dsp/voiceQuality.test.ts"
+  ],
+  "test_writer_model": "openrouter/z-ai/glm-5.3"
+}

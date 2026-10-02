@@ -1,20 +1,20 @@
 {
-  "outcome": "failed",
-  "reasons": [
-    "new test(s) never ran: should detect harmonic tones within 1% (avoiding octave errors), should detect sine waves within 0.5% with clarity > 0.9, should meet performance requirement (50 calls in under 2 seconds), should respect maxHz limit, should return null for all zero frames, should return null for most white noise inputs, should return null for signals below silence threshold, should throw RangeError for frames too short for minHz"
-  ],
-  "new_tests": {},
+  "outcome": "passed",
+  "reasons": [],
+  "new_tests": {
+    "detectPitch pure sines are detected within 0.5% with clarity above 0.9::detectPitch pure sines are detected within 0.5% with clarity above 0.9": "red",
+    "detectPitch harmonic tones are detected within 1% without octave errors::detectPitch harmonic tones are detected within 1% without octave errors": "red",
+    "detectPitch all-zero frame returns null::detectPitch all-zero frame returns null": "red",
+    "detectPitch a 220 Hz sine at -70 dBFS returns null::detectPitch a 220 Hz sine at -70 dBFS returns null": "red",
+    "detectPitch white noise returns null for at least 9 of 10 seeds::detectPitch white noise returns null for at least 9 of 10 seeds": "red",
+    "detectPitch a 1000 Hz sine with maxHz = 500 never returns a value above 500::detectPitch a 1000 Hz sine with maxHz = 500 never returns a value above 500": "red",
+    "detectPitch a frame shorter than 2 * sampleRate / minHz throws RangeError::detectPitch a frame shorter than 2 * sampleRate / minHz throws RangeError": "red",
+    "detectPitch 50 calls on 2048-sample frames take under 2 seconds::detectPitch 50 calls on 2048-sample frames take under 2 seconds": "red",
+    "detectPitch defaults match PITCH_MIN_HZ / PITCH_MAX_HZ bounds::detectPitch defaults match PITCH_MIN_HZ / PITCH_MAX_HZ bounds": "red"
+  },
   "other_failures": [],
-  "missing": [
-    "should detect harmonic tones within 1% (avoiding octave errors)",
-    "should detect sine waves within 0.5% with clarity > 0.9",
-    "should meet performance requirement (50 calls in under 2 seconds)",
-    "should respect maxHz limit",
-    "should return null for all zero frames",
-    "should return null for most white noise inputs",
-    "should return null for signals below silence threshold",
-    "should throw RangeError for frames too short for minHz"
-  ],
-  "results_dir": "/home/user/projects/voice-coach/trajectories/20260928T153728Z-84db/red_check_pitch/20260928154458_red-003939bc",
+  "missing": [],
+  "vacuous": [],
+  "results_dir": "/home/user/projects/voice-coach/trajectories/20261002T151755Z-4179/red_check_pitch/20261002160210_red-b8db1323",
   "expect": "stub"
 }

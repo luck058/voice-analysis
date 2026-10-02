@@ -1,0 +1,19 @@
+{
+  "outcome": "passed",
+  "reasons": [],
+  "new_tests": {
+    "SpectrogramModel image has correct dimensions and starts opaque black::SpectrogramModel image has correct dimensions and starts opaque black": "red",
+    "SpectrogramModel hzForRow(0) = maxHz and hzForRow(height-1) = minHz::SpectrogramModel hzForRow(0) = maxHz and hzForRow(height-1) = minHz": "red",
+    "SpectrogramModel rowForHz(hzForRow(r)) = r for every row::SpectrogramModel rowForHz(hzForRow(r)) = r for every row": "red",
+    "SpectrogramModel colourFor at the dB limits returns the end stops::SpectrogramModel colourFor at the dB limits returns the end stops": "red",
+    "SpectrogramModel colourFor clamps below minDb::SpectrogramModel colourFor clamps below minDb": "red",
+    "SpectrogramModel relative luminance increases across evenly spaced dB values::SpectrogramModel relative luminance increases across evenly spaced dB values": "red",
+    "SpectrogramModel push of a 1 kHz sine puts the brightest pixel near rowForHz(1000)::SpectrogramModel push of a 1 kHz sine puts the brightest pixel near rowForHz(1000)": "red",
+    "SpectrogramModel after a second push the previous column has moved one pixel left::SpectrogramModel after a second push the previous column has moved one pixel left": "red"
+  },
+  "other_failures": [],
+  "missing": [],
+  "vacuous": [],
+  "results_dir": "/home/user/projects/voice-coach/trajectories/20261002T151755Z-4179/red_check_spectrogram_view/20261002160624_red-bc99ccf5",
+  "expect": "stub"
+}

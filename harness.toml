@@ -15,7 +15,7 @@ schema = 1
 currency = "GBP"
 usd_per_gbp = 1.20
 per_item = 0.30
-per_run = 2.00  # 2026-10-01: below the key's $3/day limit, so the harness stops first
+per_run = 1.80  # 2026-10-02: below what the key has left today, so the harness stops first
 per_day = 10.00
 # How many times a failed item may be retried with a diagnosis before it is
 # reported as unrepairable (design D10).

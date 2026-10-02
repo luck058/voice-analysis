@@ -1,0 +1,34 @@
+{
+  "base_commit": "d0f9e41b2c9e088189a7482208db75a2c1a29e81",
+  "branch": "harness/item/pitch",
+  "files": [
+    "src/dsp/pitch.ts",
+    "src/dsp/pitch.test.ts"
+  ],
+  "fingerprint": "07944ac233ee0a26",
+  "item": "pitch",
+  "modifies_tests": [],
+  "new_tests": [
+    "50 calls on 2048-sample frames take under 2 seconds",
+    "a 1000 Hz sine with maxHz = 500 never returns a value above 500",
+    "a 220 Hz sine at -70 dBFS returns null",
+    "a frame shorter than 2 * sampleRate / minHz throws RangeError",
+    "all-zero frame returns null",
+    "defaults match PITCH_MIN_HZ / PITCH_MAX_HZ bounds",
+    "harmonic tones are detected within 1% without octave errors",
+    "pure sines are detected within 0.5% with clarity above 0.9",
+    "white noise returns null for at least 9 of 10 seeds"
+  ],
+  "profile": "feature",
+  "red_check": "passed",
+  "scaffold_commit": "5c3232afe3c0946f810635a248efcc187c250cb4",
+  "scaffolded_at": "2026-10-02T16:02:45.402463+00:00",
+  "scaffolder_model": "openrouter/deepseek/deepseek-v3.2",
+  "stub_files": [
+    "src/dsp/pitch.ts"
+  ],
+  "test_files": [
+    "src/dsp/pitch.test.ts"
+  ],
+  "test_writer_model": "openrouter/z-ai/glm-5.3"
+}

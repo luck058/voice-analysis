@@ -1,0 +1,33 @@
+{
+  "base_commit": "d0f9e41b2c9e088189a7482208db75a2c1a29e81",
+  "branch": "harness/item/spectrogram_view",
+  "files": [
+    "src/views/spectrogram.ts",
+    "src/views/spectrogram.test.ts"
+  ],
+  "fingerprint": "e63278e3de1f745f",
+  "item": "spectrogram_view",
+  "modifies_tests": [],
+  "new_tests": [
+    "after a second push the previous column has moved one pixel left",
+    "colourFor at the dB limits returns the end stops",
+    "colourFor clamps below minDb",
+    "hzForRow(0) = maxHz and hzForRow(height-1) = minHz",
+    "image has correct dimensions and starts opaque black",
+    "push of a 1 kHz sine puts the brightest pixel near rowForHz(1000)",
+    "relative luminance increases across evenly spaced dB values",
+    "rowForHz(hzForRow(r)) = r for every row"
+  ],
+  "profile": "feature",
+  "red_check": "passed",
+  "scaffold_commit": "1d19766fd96c61bb9cdb29f6f5171cce6fca0dfb",
+  "scaffolded_at": "2026-10-02T16:06:45.980598+00:00",
+  "scaffolder_model": "openrouter/deepseek/deepseek-v3.2",
+  "stub_files": [
+    "src/views/spectrogram.ts"
+  ],
+  "test_files": [
+    "src/views/spectrogram.test.ts"
+  ],
+  "test_writer_model": "openrouter/z-ai/glm-5.3"
+}

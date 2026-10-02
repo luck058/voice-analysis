@@ -1,0 +1,69 @@
+# Task: spectrogram_view
+
+## Goal
+
+Implement the SpectrogramModel class that creates and updates a scrolling spectrogram visualization. The model converts frequency-domain data (dB spectrum) into a coloured image with time on the horizontal axis and log-spaced frequency on the vertical axis, suitable for real-time display.
+
+## Requirements
+
+1. The constructor must accept width, height, sampleRate, and frameSize as required parameters, with optional minHz, maxHz, minDb, maxDb defaults as specified.
+2. The image property must be a Uint8ClampedArray of width*height*4 RGBA bytes, initialized to opaque black (0, 0, 0, 255).
+3. hzForRow(row) must return the frequency in Hz for a given row, with row 0 corresponding to maxHz and row height-1 to minHz, using logarithmic spacing.
+4. rowForHz(hz) must return the nearest row index for a given frequency, clamped to valid row range, and be the inverse of hzForRow.
+5. colourFor(db) must map a dB value to RGB colour using the five specified colour stops with linear interpolation, clamping db to [minDb, maxDb].
+6. push(spectrumDb) must shift the entire image left by one pixel and draw a new column at the rightmost position, with each row coloured according to the spectrum value at that row's frequency, interpolated between nearest bins.
+
+## Files in scope
+
+- `src/views/spectrogram.ts`
+
+## Context
+
+Follow TypeScript conventions: named exports only, explicit types on all exports. The src/views modules are pure (no DOM, no timers, no random). Invalid parameters (e.g., negative width) should throw RangeError with a descriptive message. The signal_basics dependency (fft.ts, level.ts, synth.ts) is already implemented and verified - you can import from them if needed, but this spectrogram model only needs the spectrumDb input, not the raw audio.
+
+## Rules (written by the harness, true for every task)
+
+- The tests already in this workspace define "done". They were written by a
+  separate agent and hashed before you started. Creating, changing or deleting
+  any test file fails the task, however good the rest of the work is.
+- Protected test files: `tests`, `**/*.test.ts`, `**/*.test.tsx`, `**/*.spec.ts`, `**/*.spec.tsx`.
+- Change only the files listed under "Files in scope" unless the task cannot be
+  done otherwise. Changes elsewhere are reported to the reviewer.
+- Run the tests yourself before finishing (commands below). The harness re-runs
+  them independently in a fresh container; your own report of the result is not
+  what decides whether the task passed.
+- If you are certain a test's expected value is wrong (it contradicts the task's
+  own description or a formula it states), do not edit the test and do not bend
+  the code to fit it. Write `.harness/dispute.json` and finish:
+  `{"test_file": "<path>", "test_name": "<test>", "line": <line>, "quoted": "<the
+  wrong expectation, copied exactly from that line>", "correct": "<what it should
+  be>", "derivation": "<why, from the task's description>"}`. The harness checks
+  the pointer and has the tests rewritten by another model; a dispute never
+  passes the task, and one that does not check out is rejected.
+
+## How to run the tests
+
+Run the tests before finishing. The harness independently re-runs them and
+rejects the task if its trajectory shows no real test run.
+
+The test tooling is installed for you before this session starts, by
+`.openhands/setup.sh`. Normally you only need the run command below.
+Do not reinstall the project's dependencies yourself (`npm ci`, `npm install`,
+`pip install -r ...`): the test tooling is not in the project's manifest, so
+a reinstall removes it.
+
+### Commands
+
+Run the tests:
+
+    npx --no -- jest --ci
+
+If that reports the test runner is missing, the pre-install failed.
+Re-run it yourself, passing the terminal tool's `timeout` parameter as at
+least 900 seconds (otherwise the command is
+paused after 30 seconds with no new output and reports exit code -1 while
+it is still running):
+
+    if [ -f package.json ]; then ( npm ci --no-audit --no-fund || npm install --no-audit --no-fund ) || exit 1; fi; npm install --no-audit --no-fund --no-save jest@29 ts-jest@29 typescript @types/jest jest-junit || exit 1; printf "%s\n" "module.exports = { testEnvironment: \"node\", transform: { \"^.+[.]tsx?$\": [\"ts-jest\", { diagnostics: false }] }, testMatch: [\"**/*.test.ts\", \"**/*.test.tsx\", \"**/*.spec.ts\", \"**/*.spec.tsx\"], moduleNameMapper: { \"^([.]{1,2}/.*)[.]js\$\": \"\$1\" } };" > jest.config.js
+
+and then run the tests again.

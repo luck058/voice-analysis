@@ -1,0 +1,26 @@
+{
+  "outcome": "failed",
+  "reasons": [
+    "new test(s) never ran: estimates F1 and F2 of vowel %s at f0 = 120 Hz"
+  ],
+  "new_tests": {
+    "estimateFormants estimates [\u0251] at f0 = 220 Hz with F1 850, F2 1220 within 15%::estimateFormants estimates [\u0251] at f0 = 220 Hz with F1 850, F2 1220 within 15%": "red",
+    "estimateFormants returns [] for silence::estimateFormants returns [] for silence": "red",
+    "estimateFormants returns formants sorted ascending with finite values and bandwidth < 400::estimateFormants returns formants sorted ascending with finite values and bandwidth < 400": "red",
+    "estimateFormants respects maxFormants::estimateFormants respects maxFormants": "red",
+    "estimateFormants throws RangeError for non-positive sample rate::estimateFormants throws RangeError for non-positive sample rate": "red",
+    "estimateFormants never returns NaN for a voiced frame::estimateFormants never returns NaN for a voiced frame": "red"
+  },
+  "other_failures": [
+    "estimateFormants estimates F1 and F2 of vowel { name: '\u0251', f1: 730, f2: 1090 } at f0 = 120 Hz::estimateFormants estimates F1 and F2 of vowel { name: '\u0251', f1: 730, f2: 1090 } at f0 = 120 Hz",
+    "estimateFormants estimates F1 and F2 of vowel { name: 'i', f1: 270, f2: 2290 } at f0 = 120 Hz::estimateFormants estimates F1 and F2 of vowel { name: 'i', f1: 270, f2: 2290 } at f0 = 120 Hz",
+    "estimateFormants estimates F1 and F2 of vowel { name: 'u', f1: 300, f2: 870 } at f0 = 120 Hz::estimateFormants estimates F1 and F2 of vowel { name: 'u', f1: 300, f2: 870 } at f0 = 120 Hz",
+    "estimateFormants estimates F1 and F2 of vowel { name: '\u00e6', f1: 660, f2: 1720 } at f0 = 120 Hz::estimateFormants estimates F1 and F2 of vowel { name: '\u00e6', f1: 660, f2: 1720 } at f0 = 120 Hz"
+  ],
+  "missing": [
+    "estimates F1 and F2 of vowel %s at f0 = 120 Hz"
+  ],
+  "vacuous": [],
+  "results_dir": "/home/user/projects/voice-coach/trajectories/20261002T151755Z-4179/red_check_formants/20261002160359_red-238fd300",
+  "expect": "stub"
+}

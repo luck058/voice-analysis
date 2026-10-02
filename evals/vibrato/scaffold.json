@@ -1,5 +1,5 @@
 {
-  "base_commit": "94b382dcac6df1f076b7226be8360ec18f627efe",
+  "base_commit": "7c0086ed2b47f0d937f83dac3b9966ab729dd837",
   "branch": "harness/item/vibrato",
   "files": [
     "src/analysis/vibrato.ts",
@@ -9,20 +9,20 @@
   "item": "vibrato",
   "modifies_tests": [],
   "new_tests": [
-    "should detect vibrato with 5.5Hz rate and 50 cents extent",
-    "should detect vibrato with drift",
-    "should handle gap in middle of track",
-    "should respect custom options",
-    "should return null for flat track",
-    "should return null for track too short",
-    "should return null for vibrato too slow",
-    "should return null for vibrato too small",
-    "should throw for empty track"
+    "a 0.3 s gap in 3 s of vibrato still gives the right rate",
+    "detects 5.5 Hz vibrato with 50-cent extent",
+    "ignores a linear drift of +100 cents per second",
+    "respects custom option thresholds",
+    "returns null for 0.8 s of good vibrato (too short)",
+    "returns null for 1 Hz oscillation (too slow)",
+    "returns null for 5-cent oscillation (too small)",
+    "returns null for a flat track",
+    "throws RangeError on empty track"
   ],
   "profile": "feature",
   "red_check": "passed",
-  "scaffold_commit": "321084a0d34e1bcdbb18c24962697956413d1f1d",
-  "scaffolded_at": "2026-10-01T16:22:15.219050+00:00",
+  "scaffold_commit": "2993f16fa6f6e8a0e837795d729c9eb88d80dde2",
+  "scaffolded_at": "2026-10-02T15:18:55.389317+00:00",
   "scaffolder_model": "openrouter/deepseek/deepseek-v3.2",
   "stub_files": [
     "src/analysis/vibrato.ts"
@@ -30,5 +30,5 @@
   "test_files": [
     "src/analysis/vibrato.test.ts"
   ],
-  "test_writer_model": "openrouter/qwen/qwen3-coder"
+  "test_writer_model": "openrouter/z-ai/glm-5.3"
 }

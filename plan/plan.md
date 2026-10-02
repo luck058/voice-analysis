@@ -24,7 +24,7 @@ parent: 1 · author: operator · created: 2026-09-28T19:47:45 · requests: r-202
 
 ## Items
 
-### signal_basics — Test-signal synthesis, FFT spectrum and level meter maths  `[feature]` · scaffolded
+### signal_basics — Test-signal synthesis, FFT spectrum and level meter maths  `[feature]` · pending
 
 satisfies: R4, R5 · depends: — · files: `src/testing/synth.ts`, `src/testing/synth.test.ts`, `src/dsp/fft.ts`, `src/dsp/fft.test.ts`, `src/dsp/level.ts`, `src/dsp/level.test.ts` · lang: typescript
 
@@ -79,7 +79,7 @@ length and pulse peak positions; vibratoTone's zero-crossing rate over 1 s is
 within 1% of hz; the magnitude spectrum of resonate() applied to a single-sample
 impulse has a local maximum within 3% of each formant frequency.
 
-### notes — Convert between frequency, MIDI note numbers, note names and cents  `[feature]` · scaffolded
+### notes — Convert between frequency, MIDI note numbers, note names and cents  `[feature]` · done
 
 satisfies: R2 · depends: — · files: `src/music/notes.ts`, `src/music/notes.test.ts` · lang: typescript
 
@@ -204,7 +204,7 @@ blurs cycle peaks).
 
 **Alternatives.** Cepstral peak prominence (a better single score for breathiness, harder to explain to a beginner).
 
-### vibrato — Detect vibrato rate and extent from a pitch track  `[feature]` · scaffolded
+### vibrato — Detect vibrato rate and extent from a pitch track  `[feature]` · pending
 
 satisfies: R8 · depends: — · files: `src/analysis/vibrato.ts`, `src/analysis/vibrato.test.ts` · lang: typescript
 
@@ -229,7 +229,7 @@ and extent 50 +/- 5; the same plus a drift of +100 cents per second -> rate
 (too slow); 5 cents at 6 Hz -> null (too small); 0.8 s of good vibrato -> null;
 a 0.3 s gap in the middle of 3 s of vibrato still gives the right rate.
 
-### vowel_chart — Reference vowels, vowel-chart coordinates and nearest vowel  `[feature]` · scaffolded
+### vowel_chart — Reference vowels, vowel-chart coordinates and nearest vowel  `[feature]` · done
 
 satisfies: R6 · depends: — · files: `src/views/vowelChart.ts`, `src/views/vowelChart.test.ts` · lang: typescript
 
@@ -292,7 +292,7 @@ magnitudeSpectrumDb of a 1 kHz sine (2048 samples, 48 kHz), the brightest pixel 
 the last column is within 2 rows of rowForHz(1000); after a second push, that
 column has moved one pixel left.
 
-### pitch_trace_view — Scrolling pitch-trace model on a semitone grid  `[feature]` · scaffolded
+### pitch_trace_view — Scrolling pitch-trace model on a semitone grid  `[feature]` · done
 
 satisfies: R3 · depends: notes · files: `src/views/pitchTrace.ts`, `src/views/pitchTrace.test.ts` · lang: typescript
 

@@ -1,0 +1,69 @@
+# Task: voice_quality
+
+## Goal
+
+Implement the measureVoiceQuality function that computes voice quality metrics (jitter, shimmer, and harmonics-to-noise ratio) from audio samples given a fundamental frequency. This enables the system to report voice-quality measures when the input has been voiced for at least half a second.
+
+## Requirements
+
+1. measureVoiceQuality must compute jitterPercent using Praat's 'jitter (local)' formula: 100 * mean(|T_i - T_{i+1}|) / mean(T), where T_i are periods between consecutive cycle marks
+2. measureVoiceQuality must compute shimmerPercent using Praat's 'shimmer (local)' formula: 100 * mean(|A_i - A_{i+1}|) / mean(A), where A_i are amplitudes at cycle marks
+3. measureVoiceQuality must compute hnrDb as 10 * log10(r / (1 - r)), where r is the largest normalized autocorrelation over lags within +/-10% of sampleRate / f0Hz, clamped to [0.0001, 0.9999]
+4. measureVoiceQuality must find cycle marks by searching for the largest absolute sample within +/-20% of each expected period around where the next cycle is expected, refined with parabolic interpolation
+5. measureVoiceQuality must return null when there are fewer than 10 complete cycles, when rmsDbfs is below SILENCE_DBFS (-60), or when f0Hz is outside [PITCH_MIN_HZ, PITCH_MAX_HZ]
+6. measureVoiceQuality must never return NaN for any valid input
+
+## Files in scope
+
+- `src/dsp/voiceQuality.ts`
+
+## Context
+
+Use ES module syntax (import/export). Type every exported function's parameters and return value explicitly. The signal_basics dependency is already implemented and verified: src/dsp/fft.ts, src/dsp/level.ts, and src/testing/synth.ts are available with working code. Use constants from src/config.ts: DEFAULT_SAMPLE_RATE, FRAME_SIZE, HOP_SIZE, PITCH_MIN_HZ, PITCH_MAX_HZ, A4_HZ, SILENCE_DBFS. The VoiceQuality interface is { jitterPercent: number; shimmerPercent: number; hnrDb: number }. Invalid input should throw RangeError with a message naming the parameter. 'No answer' (silence, unvoiced audio) is null, never an exception and never NaN.
+
+## Rules (written by the harness, true for every task)
+
+- The tests already in this workspace define "done". They were written by a
+  separate agent and hashed before you started. Creating, changing or deleting
+  any test file fails the task, however good the rest of the work is.
+- Protected test files: `tests`, `**/*.test.ts`, `**/*.test.tsx`, `**/*.spec.ts`, `**/*.spec.tsx`.
+- Change only the files listed under "Files in scope" unless the task cannot be
+  done otherwise. Changes elsewhere are reported to the reviewer.
+- Run the tests yourself before finishing (commands below). The harness re-runs
+  them independently in a fresh container; your own report of the result is not
+  what decides whether the task passed.
+- If you are certain a test's expected value is wrong (it contradicts the task's
+  own description or a formula it states), do not edit the test and do not bend
+  the code to fit it. Write `.harness/dispute.json` and finish:
+  `{"test_file": "<path>", "test_name": "<test>", "line": <line>, "quoted": "<the
+  wrong expectation, copied exactly from that line>", "correct": "<what it should
+  be>", "derivation": "<why, from the task's description>"}`. The harness checks
+  the pointer and has the tests rewritten by another model; a dispute never
+  passes the task, and one that does not check out is rejected.
+
+## How to run the tests
+
+Run the tests before finishing. The harness independently re-runs them and
+rejects the task if its trajectory shows no real test run.
+
+The test tooling is installed for you before this session starts, by
+`.openhands/setup.sh`. Normally you only need the run command below.
+Do not reinstall the project's dependencies yourself (`npm ci`, `npm install`,
+`pip install -r ...`): the test tooling is not in the project's manifest, so
+a reinstall removes it.
+
+### Commands
+
+Run the tests:
+
+    npx --no -- jest --ci
+
+If that reports the test runner is missing, the pre-install failed.
+Re-run it yourself, passing the terminal tool's `timeout` parameter as at
+least 900 seconds (otherwise the command is
+paused after 30 seconds with no new output and reports exit code -1 while
+it is still running):
+
+    if [ -f package.json ]; then ( npm ci --no-audit --no-fund || npm install --no-audit --no-fund ) || exit 1; fi; npm install --no-audit --no-fund --no-save jest@29 ts-jest@29 typescript @types/jest jest-junit || exit 1; printf "%s\n" "module.exports = { testEnvironment: \"node\", transform: { \"^.+[.]tsx?$\": [\"ts-jest\", { diagnostics: false }] }, testMatch: [\"**/*.test.ts\", \"**/*.test.tsx\", \"**/*.spec.ts\", \"**/*.spec.tsx\"], moduleNameMapper: { \"^([.]{1,2}/.*)[.]js\$\": \"\$1\" } };" > jest.config.js
+
+and then run the tests again.

@@ -1,0 +1,21 @@
+{
+  "outcome": "passed",
+  "reasons": [],
+  "new_tests": {
+    "measureVoiceQuality clean constant train: jitter < 0.5, shimmer < 0.5, hnr > 20::measureVoiceQuality clean constant train: jitter < 0.5, shimmer < 0.5, hnr > 20": "red",
+    "measureVoiceQuality alternating periods (true jitter ~3.75%) gives jitter in [3, 5]::measureVoiceQuality alternating periods (true jitter ~3.75%) gives jitter in [3, 5]": "red",
+    "measureVoiceQuality alternating amplitudes (true shimmer 10%) gives shimmer in [8, 12]::measureVoiceQuality alternating amplitudes (true shimmer 10%) gives shimmer in [8, 12]": "red",
+    "measureVoiceQuality hnr decreases as noise increases: clean > 20 dB > 5 dB::measureVoiceQuality hnr decreases as noise increases: clean > 20 dB > 5 dB": "red",
+    "measureVoiceQuality returns null for fewer than 10 cycles::measureVoiceQuality returns null for fewer than 10 cycles": "red",
+    "measureVoiceQuality returns null for silence (all zeros)::measureVoiceQuality returns null for silence (all zeros)": "red",
+    "measureVoiceQuality returns null when f0Hz is out of range::measureVoiceQuality returns null when f0Hz is out of range": "red",
+    "measureVoiceQuality throws RangeError for invalid sampleRate or empty samples::measureVoiceQuality throws RangeError for invalid sampleRate or empty samples": "red",
+    "measureVoiceQuality boundary f0 values within range are measured, not null::measureVoiceQuality boundary f0 values within range are measured, not null": "red",
+    " very quiet train below SILENCE_DBFS returns null:: very quiet train below SILENCE_DBFS returns null": "red"
+  },
+  "other_failures": [],
+  "missing": [],
+  "vacuous": [],
+  "results_dir": "/home/user/projects/voice-coach/trajectories/20261002T151755Z-4179/red_check_voice_quality/20261002160511_red-38dc4201",
+  "expect": "stub"
+}

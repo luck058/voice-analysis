@@ -2,19 +2,19 @@
   "outcome": "passed",
   "reasons": [],
   "new_tests": {
-    "detectVibrato should detect vibrato with 5.5Hz rate and 50 cents extent::detectVibrato should detect vibrato with 5.5Hz rate and 50 cents extent": "red",
-    "detectVibrato should detect vibrato with drift::detectVibrato should detect vibrato with drift": "red",
-    "detectVibrato should return null for flat track::detectVibrato should return null for flat track": "red",
-    "detectVibrato should return null for vibrato too slow::detectVibrato should return null for vibrato too slow": "red",
-    "detectVibrato should return null for vibrato too small::detectVibrato should return null for vibrato too small": "red",
-    "detectVibrato should return null for track too short::detectVibrato should return null for track too short": "red",
-    "detectVibrato should handle gap in middle of track::detectVibrato should handle gap in middle of track": "red",
-    "detectVibrato should throw for empty track::detectVibrato should throw for empty track": "red",
-    "detectVibrato should respect custom options::detectVibrato should respect custom options": "red"
+    "detectVibrato throws RangeError on empty track::detectVibrato throws RangeError on empty track": "red",
+    "detectVibrato detects 5.5 Hz vibrato with 50-cent extent::detectVibrato detects 5.5 Hz vibrato with 50-cent extent": "red",
+    "detectVibrato ignores a linear drift of +100 cents per second::detectVibrato ignores a linear drift of +100 cents per second": "red",
+    "detectVibrato returns null for a flat track::detectVibrato returns null for a flat track": "red",
+    "detectVibrato returns null for 1 Hz oscillation (too slow)::detectVibrato returns null for 1 Hz oscillation (too slow)": "red",
+    "detectVibrato returns null for 5-cent oscillation (too small)::detectVibrato returns null for 5-cent oscillation (too small)": "red",
+    "detectVibrato returns null for 0.8 s of good vibrato (too short)::detectVibrato returns null for 0.8 s of good vibrato (too short)": "red",
+    "detectVibrato a 0.3 s gap in 3 s of vibrato still gives the right rate::detectVibrato a 0.3 s gap in 3 s of vibrato still gives the right rate": "red",
+    "detectVibrato respects custom option thresholds::detectVibrato respects custom option thresholds": "red"
   },
   "other_failures": [],
   "missing": [],
   "vacuous": [],
-  "results_dir": "/home/user/projects/voice-coach/trajectories/20261001T161435Z-751f/red_check_vibrato/20261001162153_red-7e8013e3",
+  "results_dir": "/home/user/projects/voice-coach/trajectories/20261002T151755Z-4179/red_check_vibrato/20261002151834_red-56fdd625",
   "expect": "stub"
 }
