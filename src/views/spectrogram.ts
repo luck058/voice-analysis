@@ -1,8 +1,17 @@
+const COLOUR_STOPS: [number, [number, number, number]][] = [
+  [0, [0, 0, 4]],
+  [0.25, [81, 18, 124]],
+  [0.5, [183, 55, 121]],
+  [0.75, [252, 137, 97]],
+  [1, [252, 253, 191]],
+];
+
 /**
  * Scrolling spectrogram image model with a log frequency axis.
  * Converts a dB magnitude spectrum to a coloured column in a time-frequency image.
  */
 export class SpectrogramModel {
+  public readonly image: Uint8ClampedArray;
   private readonly width: number;
   private readonly height: number;
   private readonly sampleRate: number;
@@ -11,25 +20,8 @@ export class SpectrogramModel {
   private readonly maxHz: number;
   private readonly minDb: number;
   private readonly maxDb: number;
-  
-  /**
-   * RGBA image data, width × height × 4 bytes.
-   * Row 0 is the top (highest frequency), column 0 is the left (oldest time).
-   * Each pixel is [r, g, b, a] with alpha always 255.
-   */
-  public readonly image: Uint8ClampedArray;
-  
-  /**
-   * Create a spectrogram model.
-   * @param options.width - Image width in pixels (columns of time)
-   * @param options.height - Image height in pixels (rows of frequency)
-   * @param options.sampleRate - Audio sample rate in Hz
-   * @param options.frameSize - FFT size (number of bins in spectrumDb)
-   * @param options.minHz - Minimum displayed frequency, default 50
-   * @param options.maxHz - Maximum displayed frequency, default 8000
-   * @param options.minDb - Minimum dB for colour mapping, default -100
-   * @param options.maxDb - Maximum dB for colour mapping, default -20
-   */
+  private readonly binWidth: number;
+
   constructor(options: {
     width: number;
     height: number;
@@ -40,52 +32,115 @@ export class SpectrogramModel {
     minDb?: number;
     maxDb?: number;
   }) {
-    throw new Error('Not implemented');
+    const {
+      width,
+      height,
+      sampleRate,
+      frameSize,
+      minHz = 50,
+      maxHz = 8000,
+      minDb = -100,
+      maxDb = -20,
+    } = options;
+
+    if (width <= 0) throw new RangeError('width must be positive');
+    if (height <= 0) throw new RangeError('height must be positive');
+    if (sampleRate <= 0) throw new RangeError('sampleRate must be positive');
+    if (frameSize <= 0) throw new RangeError('frameSize must be positive');
+    if (minHz <= 0) throw new RangeError('minHz must be positive');
+    if (maxHz <= minHz) throw new RangeError('maxHz must be greater than minHz');
+    if (maxDb <= minDb) throw new RangeError('maxDb must be greater than minDb');
+
+    this.width = width;
+    this.height = height;
+    this.sampleRate = sampleRate;
+    this.frameSize = frameSize;
+    this.minHz = minHz;
+    this.maxHz = maxHz;
+    this.minDb = minDb;
+    this.maxDb = maxDb;
+    this.binWidth = sampleRate / frameSize;
+
+    const size = width * height * 4;
+    const img = new Uint8ClampedArray(size);
+    for (let i = 0; i < size; i += 4) {
+      img[i] = 0;
+      img[i + 1] = 0;
+      img[i + 2] = 0;
+      img[i + 3] = 255;
+    }
+    this.image = img;
   }
-  
-  /**
-   * Get the frequency in Hz for a given row.
-   * Row 0 corresponds to maxHz, row height-1 to minHz.
-   * Frequencies are log-spaced between minHz and maxHz.
-   * @param row - Row index, 0 ≤ row < height
-   * @returns Frequency in Hz
-   */
+
   hzForRow(row: number): number {
-    throw new Error('Not implemented');
+    const t = row / (this.height - 1);
+    return this.maxHz * Math.pow(this.minHz / this.maxHz, t);
   }
-  
-  /**
-   * Get the nearest row index for a given frequency.
-   * The inverse of hzForRow, rounded to nearest integer and clamped to [0, height-1].
-   * @param hz - Frequency in Hz
-   * @returns Row index
-   */
+
   rowForHz(hz: number): number {
-    throw new Error('Not implemented');
+    const t = Math.log(hz / this.maxHz) / Math.log(this.minHz / this.maxHz);
+    const r = Math.round(t * (this.height - 1));
+    return Math.max(0, Math.min(this.height - 1, r));
   }
-  
-  /**
-   * Map a dB value to an RGB colour.
-   * Clamps db to [minDb, maxDb], maps to t in [0, 1], and linearly interpolates
-   * between five colour stops at t = 0, 0.25, 0.5, 0.75, 1:
-   * (0, 0, 4), (81, 18, 124), (183, 55, 121), (252, 137, 97), (252, 253, 191).
-   * @param db - Decibel value
-   * @returns [r, g, b] tuple, each 0–255
-   */
+
   colourFor(db: number): [number, number, number] {
-    throw new Error('Not implemented');
+    const clamped = Math.max(this.minDb, Math.min(this.maxDb, db));
+    const t = (clamped - this.minDb) / (this.maxDb - this.minDb);
+
+    for (let i = 0; i < COLOUR_STOPS.length - 1; i++) {
+      const [t0, c0] = COLOUR_STOPS[i];
+      const [t1, c1] = COLOUR_STOPS[i + 1];
+      if (t >= t0 && t <= t1) {
+        const f = (t - t0) / (t1 - t0);
+        return [
+          Math.round(c0[0] + f * (c1[0] - c0[0])),
+          Math.round(c0[1] + f * (c1[1] - c0[1])),
+          Math.round(c0[2] + f * (c1[2] - c0[2])),
+        ];
+      }
+    }
+
+    return [252, 253, 191];
   }
-  
-  /**
-   * Add a new spectrum column to the spectrogram.
-   * Shifts every row left by one pixel and draws the new column at x = width-1.
-   * Each row's pixel colour is determined by colourFor(spectrumValueAtHz),
-   * where spectrumValueAtHz is linearly interpolated between the two nearest
-   * bins (bin = hz * frameSize / sampleRate).
-   * Alpha stays 255.
-   * @param spectrumDb - dB magnitude spectrum, length frameSize/2 + 1
-   */
+
   push(spectrumDb: Float32Array): void {
-    throw new Error('Not implemented');
+    const w = this.width;
+    const h = this.height;
+    const img = this.image;
+    const bw = this.binWidth;
+    const specLen = spectrumDb.length;
+
+    // Shift every row left by one pixel
+    for (let r = 0; r < h; r++) {
+      img.copyWithin(r * w * 4, r * w * 4 + 4, (r + 1) * w * 4);
+    }
+
+    // Draw new column at x = width - 1
+    const x = w - 1;
+    for (let r = 0; r < h; r++) {
+      const hz = this.hzForRow(r);
+      const bin = hz / bw;
+      const lo = Math.floor(bin);
+      const hi = Math.ceil(bin);
+      const frac = bin - lo;
+
+      let db: number;
+      if (hi <= 0) {
+        db = spectrumDb[0];
+      } else if (lo >= specLen - 1) {
+        db = spectrumDb[specLen - 1];
+      } else {
+        const safeLo = Math.max(0, lo);
+        const safeHi = Math.min(specLen - 1, hi);
+        db = spectrumDb[safeLo] + frac * (spectrumDb[safeHi] - spectrumDb[safeLo]);
+      }
+
+      const [cr, cg, cb] = this.colourFor(db);
+      const idx = (r * w + x) * 4;
+      img[idx] = cr;
+      img[idx + 1] = cg;
+      img[idx + 2] = cb;
+      img[idx + 3] = 255;
+    }
   }
 }
